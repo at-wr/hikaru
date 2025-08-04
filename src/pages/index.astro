@@ -1,15 +1,23 @@
 ---
-import PageLayout from "../layouts/PageLayout.astro";
+import Foundation from "../layouts/Foundation.astro";
 import Main from "../components/Main.astro";
+import { getCollection } from 'astro:content';
 
-const meta = {
-  title: "Alan Ye - Full-Stack Developer",
-  description: "Architecting human-centered digital experiences through code. Full-stack developer focused on clean design and robust engineering.",
-  type: "website" as const,
-  url: "https://wrye.dev"
-};
+// Get recent blog posts for dynamic description
+const recentPosts = await getCollection('posts', ({ data }) => {
+  return !data.draft;
+}).then(posts => 
+  posts
+    .sort((a, b) => new Date(b.data.published).getTime() - new Date(a.data.published).getTime())
+    .slice(0, 3)
+);
+
+// Generate dynamic description from recent posts
+const dynamicDescription = recentPosts.length > 0 
+  ? `Architecting human-centered digital experiences through code. Place where I write, record, and share my thoughts. Latest posts: ${recentPosts.map(post => post.data.title).join(', ')}.`
+  : undefined; // Falls back to Foundation's default
 ---
 
-<PageLayout meta={meta}>
+<Foundation description={dynamicDescription}>
   <Main />
-</PageLayout>
+</Foundation>
