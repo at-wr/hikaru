@@ -1,0 +1,101 @@
+---
+interface Props {
+  tagline?: string;
+  subtitle?: string;
+}
+
+const { 
+  tagline = "Architecting human-centered digital experiences through code",
+  subtitle = "Crafting at the intersection of technology and design"
+} = Astro.props;
+---
+
+<section class="min-h-screen flex flex-col justify-center px-8 md:px-16 lg:px-24 pt-20 md:pt-16" style="view-transition-name: hero-section;">
+  <div class="max-w-4xl">
+    <p class="hero-tagline text-lg md:text-xl lg:text-2xl text-slate-700 leading-relaxed font-light mb-3">
+      <span>Architecting</span> <span>human-centered</span> <span>digital</span> <span>experiences</span> <span>through</span> <span>code</span>
+    </p>
+    
+    <div class="text-sm text-slate-500 font-light">
+      {subtitle}
+    </div>
+    
+    <!-- Scroll indicator -->
+    <div class="mt-8">
+      <button 
+        type="button"
+        class="scroll-arrow group cursor-pointer opacity-60 hover:opacity-90 transition-opacity duration-300"
+        onclick="window.scrollTo({top: window.innerHeight * 0.65, behavior: 'smooth'})"
+        aria-label="Scroll to main content"
+      >
+        <div class="text-slate-400 tracking-wider animate-bounce">↓</div>
+      </button>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Hero tagline variable font animation */
+  .hero-tagline {
+    font-family: 'Inter Variable', system-ui, sans-serif;
+    font-variation-settings: 'wght' 300, 'wdth' 100, 'slnt' 0;
+    font-feature-settings: 'liga' 1, 'kern' 1, 'calt' 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-wrap: break-word;
+    hyphens: none;
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    word-break: keep-all;
+    orphans: 3;
+    widows: 3;
+    text-wrap: pretty;
+  }
+
+  /* Variable font breathing animation with both weight and width */
+  @keyframes fontBreathe {
+    0% {
+      font-variation-settings: 'wght' 300, 'wdth' 100, 'slnt' 0;
+    }
+    45% {
+      font-variation-settings: 'wght' 550, 'wdth' 120, 'slnt' 0;
+    }
+    80% {
+      font-variation-settings: 'wght' 550, 'wdth' 120, 'slnt' 0;
+    }
+    100% {
+      font-variation-settings: 'wght' 300, 'wdth' 100, 'slnt' 0;
+    }
+  }
+
+  .hero-tagline span {
+    animation: fontBreathe 2s ease-in-out infinite;
+    display: inline-block;
+    transition: font-variation-settings 0.2s;
+    white-space: nowrap;
+  }
+
+  /* Responsive adjustments for smaller screens */
+  @media (max-width: 768px) {
+    .hero-tagline {
+      font-size: 1.125rem !important; /* Smaller base size on mobile */
+      line-height: 1.6;
+      font-variation-settings: 'wght' 550, 'wdth' 110, 'slnt' 0; /* Static emphasized style on mobile */
+    }
+    
+    .hero-tagline span {
+      white-space: normal; /* Allow wrapping on mobile */
+      display: inline; /* Use inline instead of inline-block on mobile */
+      animation: none; /* Disable animation on mobile */
+    }
+  }
+
+  /* Staggered animation delays for each word - faster sequence */
+  .hero-tagline span:nth-child(1) { animation-delay: 0s; }
+  .hero-tagline span:nth-child(2) { animation-delay: 0.15s; }
+  .hero-tagline span:nth-child(3) { animation-delay: 0.3s; }
+  .hero-tagline span:nth-child(4) { animation-delay: 0.45s; }
+  .hero-tagline span:nth-child(5) { animation-delay: 0.6s; }
+  .hero-tagline span:nth-child(6) { animation-delay: 0.75s; }
+</style>

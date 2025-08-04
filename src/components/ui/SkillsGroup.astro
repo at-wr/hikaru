@@ -1,0 +1,38 @@
+---
+interface Props {
+  title: string;
+  skills: string[];
+}
+
+const { title, skills } = Astro.props;
+---
+
+<div class="skills-group">
+  <h3 class="skills-title">{title}</h3>
+  <div class="skills-list">
+    {skills.map(skill => (
+      <span class="skill-tag">{skill}</span>
+    ))}
+  </div>
+</div>
+
+<style>
+  @reference "tailwindcss";
+  
+  .skills-group {
+    @apply space-y-3;
+  }
+
+  .skills-title {
+    @apply text-lg font-medium text-slate-800;
+  }
+
+  .skills-list {
+    @apply flex flex-wrap gap-2;
+  }
+
+  .skill-tag {
+    @apply px-2 py-1 bg-slate-100 text-slate-600 rounded text-xs font-mono;
+    @apply hover:bg-slate-200 transition-colors duration-200;
+  }
+</style>

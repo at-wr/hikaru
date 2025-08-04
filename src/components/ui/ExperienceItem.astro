@@ -1,0 +1,47 @@
+---
+interface Props {
+  title: string;
+  company: string;
+  period: string;
+  description: string;
+}
+
+const { title, company, period, description } = Astro.props;
+---
+
+<div class="experience-item group">
+  <div class="experience-header">
+    <h3 class="experience-title">{title}</h3>
+    <span class="experience-period">{period}</span>
+  </div>
+  <p class="experience-company">{company}</p>
+  <p class="experience-description">{description}</p>
+</div>
+
+<style>
+  @reference "tailwindcss";
+  
+  .experience-item {
+    @apply space-y-2;
+  }
+
+  .experience-header {
+    @apply flex flex-col md:flex-row md:items-center md:justify-between;
+  }
+
+  .experience-title {
+    @apply text-xl font-medium text-slate-800;
+  }
+
+  .experience-period {
+    @apply text-sm text-slate-500 font-mono mt-1 md:mt-0;
+  }
+
+  .experience-company {
+    @apply text-slate-600 font-medium;
+  }
+
+  .experience-description {
+    @apply text-slate-600 leading-relaxed;
+  }
+</style>

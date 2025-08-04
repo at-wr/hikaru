@@ -1,0 +1,110 @@
+---
+import Foundation from '../../../layouts/Foundation.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
+  const allTags = posts.flatMap(post => post.data.tags);
+  const uniqueTags = [...new Set(allTags)] as string[];
+  
+  return uniqueTags.map((tag) => ({
+    params: { tag: tag.toLowerCase().replace(/\s+/g, '-') },
+    props: { tag, posts: posts.filter(post => post.data.tags.includes(tag)) },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+
+// Sort posts by published date (newest first)
+const sortedPosts = posts.sort((a, b) => 
+  new Date(b.data.published).getTime() - new Date(a.data.published).getTime()
+);
+
+// Helper function to format date
+function formatDate(date: Date) {
+  return new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+}
+---
+
+<Foundation 
+  title={`${tag} - Archive`}
+  description={`Posts tagged with ${tag}.`}
+>
+  <div class="min-h-screen bg-white">
+    <!-- Main content -->
+    <main class="px-8 md:px-16 lg:px-24 py-16" style="view-transition-name: main-content;">
+      <div class="max-w-4xl mx-auto">
+        <!-- Hero section -->
+        <section class="mb-16">
+          <div class="mb-6">
+            <a 
+              href="/archive" 
+              class="inline-flex items-center text-slate-600 hover:text-slate-900 transition-colors text-sm mb-4"
+            >
+              ← Back to Archive
+            </a>
+          </div>
+          <h2 class="text-4xl md:text-5xl font-light text-slate-900 mb-6 leading-tight">
+            #{tag}
+          </h2>
+          <p class="text-lg text-slate-600 leading-relaxed max-w-2xl">
+            {sortedPosts.length} post{sortedPosts.length !== 1 ? 's' : ''} tagged with this topic.
+          </p>
+        </section>
+
+        <!-- Posts grid -->
+        <section class="space-y-8">
+          {sortedPosts.map(post => (
+            <article class="blog-post border-b border-slate-200 pb-8 last:border-b-0">
+              <div class="group">
+                <div class="mb-4">
+                  <div class="flex items-center gap-4 text-sm text-slate-500 font-mono mb-3">
+                    <a 
+                      href={`/archive/category/${post.data.category.toLowerCase().replace(/\s+/g, '-')}`}
+                      class="inline-block px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm font-medium hover:bg-slate-200 transition-colors"
+                    >
+                      {post.data.category}
+                    </a>
+                    <time datetime={post.data.published.toISOString()}>
+                      {formatDate(post.data.published)}
+                    </time>
+                  </div>
+                  <h3 class="text-2xl md:text-3xl font-light text-slate-900 mb-3 group-hover:text-slate-600 transition-colors">
+                    <a href={`/archive/${post.slug}`} class="block hover-arrow">
+                      {post.data.title}
+                      <span class="arrow">→</span>
+                    </a>
+                  </h3>
+                  <p class="text-base text-slate-600 leading-relaxed mb-4">
+                    {post.data.description}
+                  </p>
+                </div>
+              </div>
+            </article>
+          ))}
+        </section>
+      </div>
+    </main>
+  </div>
+</Foundation>
+
+<style>
+  @reference "tailwindcss";
+
+  .hover-arrow {
+    @apply relative;
+  }
+
+  .hover-arrow .arrow {
+    @apply inline opacity-0 transform translate-x-[-10px] transition-all duration-300;
+    white-space: nowrap;
+  }
+
+  .hover-arrow:hover .arrow {
+    @apply opacity-100 translate-x-0;
+  }
+</style>

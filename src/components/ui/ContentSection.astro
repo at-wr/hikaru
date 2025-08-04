@@ -1,0 +1,41 @@
+---
+interface Props {
+  title: string;
+  id?: string;
+  class?: string;
+}
+
+const { title, id, class: className } = Astro.props;
+---
+
+<div class:list={["content-section", className]} id={id}>
+  <h2 class="section-heading">{title}</h2>
+  <slot />
+</div>
+
+<style>
+  @reference "tailwindcss";
+  
+  .content-section {
+    @apply border-l-2 border-slate-200 pl-6 md:pl-8;
+  }
+
+  .section-heading {
+    @apply text-2xl md:text-3xl lg:text-4xl text-slate-900 mb-4 md:mb-6 tracking-wide;
+    font-family: 'Inter Variable', system-ui, sans-serif;
+    font-variation-settings: 'wght' 300, 'wdth' 100;
+    transition: font-variation-settings 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @container (min-width: 768px) {
+    .section-heading {
+      font-size: 2rem;
+    }
+  }
+
+  @container (min-width: 1024px) {
+    .section-heading {
+      font-size: 2.5rem;
+    }
+  }
+</style>

@@ -1,0 +1,173 @@
+---
+import Foundation from './Foundation.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+const { title, published, category, tags, description } = post.data;
+
+// Format date
+const publishedDate = new Date(published).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<Foundation title={title} description={description}>
+  <div class="min-h-screen bg-white">
+    <!-- Article content -->
+    <article class="px-8 md:px-16 lg:px-24 py-16" style="view-transition-name: blog-content;">
+      <div class="max-w-4xl mx-auto">
+        <!-- Article header -->
+        <header class="mb-12">
+          <div class="mb-6">
+            <a 
+              href={`/archive/category/${category.toLowerCase().replace(/\s+/g, '-')}`}
+              class="inline-block px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm font-medium mb-4 hover:bg-slate-200 transition-colors"
+            >
+              {category}
+            </a>
+            <h1 class="text-4xl md:text-5xl font-light text-slate-900 mb-4 leading-tight">
+              {title}
+            </h1>
+            <p class="text-lg text-slate-600 leading-relaxed mb-6">
+              {description}
+            </p>
+          </div>
+          
+          <!-- Metadata -->
+          <div class="flex flex-wrap items-center gap-4 text-sm text-slate-500 font-mono">
+            <time datetime={published.toISOString()}>
+              {publishedDate}
+            </time>
+            <div class="flex flex-wrap gap-2">
+              {tags.map(tag => (
+                <a 
+                  href={`/archive/tag/${tag.toLowerCase().replace(/\s+/g, '-')}`}
+                  class="skill-tag hover:bg-slate-200"
+                >
+                  {tag}
+                </a>
+              ))}
+            </div>
+          </div>
+        </header>
+
+        <!-- Article content -->
+        <div class="prose prose-lg max-w-none">
+          <div class="blog-content">
+            <slot />
+          </div>
+        </div>
+
+        <!-- Back to blog link -->
+        <footer class="mt-16 pt-8 border-t border-slate-200">
+          <a 
+            href="/archive" 
+            class="inline-flex items-center text-slate-600 hover:text-slate-900 transition-colors text-sm"
+          >
+            ← Back to Archive
+          </a>
+        </footer>
+      </div>
+    </article>
+  </div>
+</Foundation>
+
+<style>
+  @reference "tailwindcss";
+  
+  .blog-content {
+    @apply text-slate-700 leading-relaxed;
+  }
+
+  .blog-content :global(h1) {
+    @apply text-3xl font-light text-slate-900 mb-6 mt-12 first:mt-0;
+  }
+
+  .blog-content :global(h2) {
+    @apply text-2xl font-light text-slate-900 mb-4 mt-10;
+  }
+
+  .blog-content :global(h3) {
+    @apply text-xl font-medium text-slate-800 mb-3 mt-8;
+  }
+
+  .blog-content :global(h4) {
+    @apply text-lg font-medium text-slate-800 mb-2 mt-6;
+  }
+
+  .blog-content :global(p) {
+    @apply mb-6 text-base leading-relaxed;
+  }
+
+  .blog-content :global(ul), 
+  .blog-content :global(ol) {
+    @apply mb-6 pl-6 space-y-2;
+  }
+
+  .blog-content :global(li) {
+    @apply text-base leading-relaxed;
+  }
+
+  .blog-content :global(ul li) {
+    @apply list-disc;
+  }
+
+  .blog-content :global(ol li) {
+    @apply list-decimal;
+  }
+
+  .blog-content :global(blockquote) {
+    @apply border-l-4 border-slate-300 pl-6 py-2 my-6 italic text-slate-600;
+  }
+
+  .blog-content :global(code) {
+    @apply bg-slate-100 text-slate-800 px-2 py-1 rounded text-sm font-mono;
+  }
+
+  .blog-content :global(pre) {
+    @apply p-6 rounded-lg overflow-x-auto mb-6 text-sm;
+    /* Let Shiki handle the background and text colors */
+  }
+
+  .blog-content :global(pre code) {
+    @apply p-0;
+    /* Let Shiki handle all the styling */
+    background: transparent !important;
+  }
+
+  .blog-content :global(a) {
+    @apply text-slate-900 underline hover:text-slate-600 transition-colors;
+  }
+
+  .blog-content :global(img) {
+    @apply rounded-lg shadow-sm mb-6 max-w-full h-auto;
+  }
+
+  .blog-content :global(table) {
+    @apply w-full border-collapse border border-slate-300 mb-6;
+  }
+
+  .blog-content :global(th), 
+  .blog-content :global(td) {
+    @apply border border-slate-300 px-4 py-2 text-left;
+  }
+
+  .blog-content :global(th) {
+    @apply bg-slate-50 font-medium;
+  }
+
+  .blog-content :global(hr) {
+    @apply border-t border-slate-200 my-12;
+  }
+
+  .skill-tag {
+    @apply px-2 py-1 bg-slate-100 text-slate-600 rounded text-xs font-mono;
+    @apply hover:bg-slate-200 transition-colors duration-200;
+  }
+</style>
