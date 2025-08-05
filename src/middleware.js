@@ -22,10 +22,9 @@ export const onRequest = defineMiddleware((context, next) => {
   // Handle tag case and space normalization
   if (pathname.startsWith('/archive/tag/')) {
     const tagPath = pathname.replace('/archive/tag/', '');
-    const normalizedTag = tagPath
+    const normalizedTag = decodeURIComponent(tagPath)
       .toLowerCase()
       .replace(/\s+/g, '-')
-      .replace(/%20/g, '-')
       .replace(/_/g, '-');
     
     if (tagPath !== normalizedTag) {
