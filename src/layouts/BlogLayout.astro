@@ -1,5 +1,5 @@
 ---
-import Foundation from './Foundation.astro';
+import BaseLayout from './BaseLayout.astro';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -17,7 +17,7 @@ const publishedDate = new Date(published).toLocaleDateString('en-US', {
 });
 ---
 
-<Foundation title={title} description={description}>
+<BaseLayout title={title} description={description}>
   <div class="min-h-screen bg-white">
     <!-- Article content -->
     <article class="px-8 md:px-16 lg:px-24 py-16" style="view-transition-name: blog-content;">
@@ -76,7 +76,7 @@ const publishedDate = new Date(published).toLocaleDateString('en-US', {
       </div>
     </article>
   </div>
-</Foundation>
+</BaseLayout>
 
 <style>
   @reference "tailwindcss";

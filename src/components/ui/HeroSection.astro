@@ -20,7 +20,6 @@ const {
       {subtitle}
     </div>
     
-    <!-- Scroll indicator -->
     <div class="mt-8">
       <button 
         type="button"
@@ -35,25 +34,10 @@ const {
 </section>
 
 <style>
-  /* Hero tagline variable font animation */
   .hero-tagline {
-    font-family: 'Inter Variable', system-ui, sans-serif;
     font-variation-settings: 'wght' 300, 'wdth' 100, 'slnt' 0;
-    font-feature-settings: 'liga' 1, 'kern' 1, 'calt' 1;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    overflow-wrap: break-word;
-    hyphens: none;
-    -webkit-hyphens: none;
-    -moz-hyphens: none;
-    word-break: keep-all;
-    orphans: 3;
-    widows: 3;
-    text-wrap: pretty;
   }
 
-  /* Variable font breathing animation with both weight and width */
   @keyframes fontBreathe {
     0% {
       font-variation-settings: 'wght' 300, 'wdth' 100, 'slnt' 0;
@@ -76,22 +60,20 @@ const {
     white-space: nowrap;
   }
 
-  /* Responsive adjustments for smaller screens */
   @media (max-width: 768px) {
     .hero-tagline {
-      font-size: 1.125rem !important; /* Smaller base size on mobile */
+      font-size: 1.125rem !important;
       line-height: 1.6;
-      font-variation-settings: 'wght' 550, 'wdth' 110, 'slnt' 0; /* Static emphasized style on mobile */
+      font-variation-settings: 'wght' 550, 'wdth' 110, 'slnt' 0;
     }
     
     .hero-tagline span {
-      white-space: normal; /* Allow wrapping on mobile */
-      display: inline; /* Use inline instead of inline-block on mobile */
-      animation: none; /* Disable animation on mobile */
+      white-space: normal;
+      display: inline;
+      animation: none;
     }
   }
 
-  /* Staggered animation delays for each word - faster sequence */
   .hero-tagline span:nth-child(1) { animation-delay: 0s; }
   .hero-tagline span:nth-child(2) { animation-delay: 0.15s; }
   .hero-tagline span:nth-child(3) { animation-delay: 0.3s; }

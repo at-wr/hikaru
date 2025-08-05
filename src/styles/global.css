@@ -1,212 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import "tailwindcss";
 
-/* Global Font Family - Applied to entire website */
-html,
-body {
-    font-family: 'Inter Variable', system-ui, sans-serif;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+:root {
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Header Logo Styling with Variable Font Support */
-.site-logo {
-    font-family: 'Inter Variable', system-ui, sans-serif;
-    font-weight: 300;
-    letter-spacing: 0.025em;
-    font-variation-settings: 
-        'wght' 300,
-        'slnt' 0;
-    font-feature-settings: 
-        'liga' 1,
-        'kern' 1,
-        'calt' 1;
-    text-rendering: optimizeLegibility;
+/* Base typography with Tailwind classes */
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    font-feature-settings: 'liga' 1, 'kern' 1, 'calt' 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    transition: font-variation-settings 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
 }
 
-/* View Transitions Animations */
-::view-transition-old(root),
-::view-transition-new(root) {
+/* View transition animations */
+@layer utilities {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
     animation-duration: 0.3s;
-    animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
-}
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
 
-::view-transition-old(root) {
+  ::view-transition-old(root) {
     animation-name: slide-out;
-}
+  }
 
-::view-transition-new(root) {
+  ::view-transition-new(root) {
     animation-name: slide-in;
-}
+  }
 
-/* Header should persist and animate smoothly during transitions */
-#site-header {
-    view-transition-name: header-persist;
-}
-
-/* Logo elements should maintain their state */
-#site-logo-desktop,
-#site-logo-mobile {
-    view-transition-name: logo-persist;
-}
-
-/* Scroll progress should also persist */
-#scroll-progress {
-    view-transition-name: scroll-progress-persist;
-}
-
-/* Slide animations for page content */
-@keyframes slide-out {
+  @keyframes slide-out {
     from {
-        opacity: 1;
-        transform: translateX(0);
+      opacity: 1;
+      transform: translateX(0);
     }
     to {
-        opacity: 0;
-        transform: translateX(-15px);
+      opacity: 0;
+      transform: translateX(-15px);
     }
-}
+  }
 
-@keyframes slide-in {
+  @keyframes slide-in {
     from {
-        opacity: 0;
-        transform: translateX(15px);
+      opacity: 0;
+      transform: translateX(15px);
     }
     to {
-        opacity: 1;
-        transform: translateX(0);
+      opacity: 1;
+      transform: translateX(0);
     }
-}
+  }
 
-/* Smooth transitions for persistent elements */
-::view-transition-group(header-persist),
-::view-transition-group(logo-persist),
-::view-transition-group(scroll-progress-persist) {
-    animation-duration: 0.2s;
-    animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
-}
-
-/* Ensure header elements don't flicker during transitions */
-::view-transition-old(header-persist),
-::view-transition-new(header-persist),
-::view-transition-old(logo-persist),
-::view-transition-new(logo-persist),
-::view-transition-old(scroll-progress-persist),
-::view-transition-new(scroll-progress-persist) {
-    animation: none;
-}
-
-/* Main content should have staggered animation */
-main {
-    view-transition-name: main-content;
-}
-
-::view-transition-group(main-content) {
-    animation-duration: 0.4s;
-    animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
-}
-
-/* Blog content specific transition */
-article {
-    view-transition-name: blog-content;
-}
-
-::view-transition-group(blog-content) {
-    animation-duration: 0.4s;
-    animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
-}
-
-/* Hero section transition */
-::view-transition-group(hero-section) {
-    animation-duration: 0.5s;
-    animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
-}
-
-/* Page-specific transition animations */
-@media (prefers-reduced-motion: no-preference) {
-    ::view-transition-old(root) {
-        animation-name: slide-out-with-scale;
-    }
-    
-    ::view-transition-new(root) {
-        animation-name: slide-in-with-scale;
-    }
-    
-    /* Different animations for different content types */
-    ::view-transition-old(main-content) {
-        animation-name: fade-slide-out;
-    }
-    
-    ::view-transition-new(main-content) {
-        animation-name: fade-slide-in;
-    }
-    
-    ::view-transition-old(blog-content) {
-        animation-name: fade-slide-out;
-    }
-    
-    ::view-transition-new(blog-content) {
-        animation-name: fade-slide-in;
-    }
-}
-
-@keyframes fade-slide-out {
-    from {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-    to {
-        opacity: 0;
-        transform: translateY(-10px) scale(0.98);
-    }
-}
-
-@keyframes fade-slide-in {
-    from {
-        opacity: 0;
-        transform: translateY(10px) scale(0.98);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-@keyframes slide-out-with-scale {
-    from {
-        opacity: 1;
-        transform: translateX(0) scale(1);
-    }
-    to {
-        opacity: 0;
-        transform: translateX(-15px) scale(0.98);
-    }
-}
-
-@keyframes slide-in-with-scale {
-    from {
-        opacity: 0;
-        transform: translateX(15px) scale(0.98);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0) scale(1);
-    }
-}
-
-/* Respect user preferences for reduced motion */
-@media (prefers-reduced-motion: reduce) {
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
     ::view-transition-old(root),
     ::view-transition-new(root) {
-        animation-duration: 0.1s;
-        animation-name: simple-fade;
+      animation-duration: 0.1s;
+      animation-name: simple-fade;
     }
-}
+  }
 
-@keyframes simple-fade {
+  @keyframes simple-fade {
     from { opacity: 0; }
     to { opacity: 1; }
+  }
 }
