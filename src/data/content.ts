@@ -89,7 +89,8 @@ export const contactMethods: ContactMethod[] = [
   {
     label: "Mastodon",
     href: "https://mastodon.social/@wrye", 
-    external: true
+    external: true,
+    rel: "me"
   }
 ];
 

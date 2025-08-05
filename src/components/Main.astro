@@ -4,7 +4,6 @@ import ContentSection from "./ui/ContentSection.astro";
 import ProjectCard from "./ui/ProjectCard.astro";
 import ExperienceItem from "./ui/ExperienceItem.astro";
 import SkillsGroup from "./ui/SkillsGroup.astro";
-import ContactLink from "./ui/ContactLink.astro";
 import ExternalLink from "./ui/ExternalLink.astro";
 import PostListItem from "./PostListItem.astro";
 
@@ -123,6 +122,7 @@ const recentPosts = await getCollection('posts', ({ data }) => {
                   href={contact.href} 
                   external={contact.external}
                   id={contact.label === "Email" ? "email-link" : undefined}
+                  rel={contact.rel || undefined}
                 >
                   {contact.label}
                 </ExternalLink>

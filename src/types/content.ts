@@ -44,6 +44,7 @@ export interface ContactMethod {
   external?: boolean;
   icon?: string;
   primary?: boolean;
+  rel?: string;
 }
 
 // Page metadata for SEO and social sharing

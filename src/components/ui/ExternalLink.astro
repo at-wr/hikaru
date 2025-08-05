@@ -4,16 +4,32 @@ interface Props {
   external?: boolean;
   class?: string;
   id?: string;
+  rel?: string;
 }
 
-const { href, external = true, class: className, id } = Astro.props;
+const { href, external = true, class: className, id, rel } = Astro.props;
+
+// Build rel attribute based on props
+const relAttribute = (() => {
+  const parts: string[] = [];
+  
+  if (external) {
+    parts.push('noopener', 'noreferrer');
+  }
+  
+  if (rel) {
+    parts.push(...rel.split(' ').filter(Boolean));
+  }
+  
+  return parts.length > 0 ? parts.join(' ') : undefined;
+})();
 ---
 
 <a 
   href={href}
   class:list={["external-link group", className]}
   target={external ? "_blank" : undefined}
-  rel={external ? "noopener noreferrer" : undefined}
+  rel={relAttribute}
   id={id}
 >
   <span class="external-link-text"><slot /></span>
