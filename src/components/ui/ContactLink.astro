@@ -4,9 +4,11 @@ interface Props {
   external?: boolean;
   class?: string;
   id?: string;
+  arrow?: string;
 }
 
-const { href, external = false, class: className, id } = Astro.props;
+const { href, external = false, class: className, id, arrow } = Astro.props;
+const viewArrow = arrow || '→';
 ---
 
 <a 
@@ -16,7 +18,7 @@ const { href, external = false, class: className, id } = Astro.props;
   rel={external ? "noopener noreferrer" : undefined}
   id={id}
 >
-  <span class="contact-arrow">→</span>
+  <span class="contact-arrow">{viewArrow}</span>
   <slot />
 </a>
 

@@ -5,6 +5,8 @@ import ProjectCard from "./ui/ProjectCard.astro";
 import ExperienceItem from "./ui/ExperienceItem.astro";
 import SkillsGroup from "./ui/SkillsGroup.astro";
 import ContactLink from "./ui/ContactLink.astro";
+import ExternalLink from "./ui/ExternalLink.astro";
+import PostListItem from "./PostListItem.astro";
 
 // Import data from centralized content file
 import { 
@@ -29,14 +31,6 @@ const recentPosts = await getCollection('posts', ({ data }) => {
     .slice(0, 3)
 );
 
-// Helper function to format date
-function formatDate(date: Date) {
-  return new Date(date).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
-}
 ---
 
 <div class="min-h-screen bg-white">
@@ -69,28 +63,16 @@ function formatDate(date: Date) {
           </h2>
           <div class="space-y-6">
             {recentPosts.map(post => (
-              <article class="group border-b border-slate-200 pb-6 last:border-b-0">
-                <div class="mb-3">
-                  <h3 class="text-base md:text-xl text-light text-slate-900 mb-2 group-hover:text-slate-600 transition-colors">
-                    <a href={`/archive/${post.slug}`} class="block hover-arrow">
-                      {post.data.title}
-                      <span class="arrow">→</span>
-                    </a>
-                  </h3>
-                  <p class="text-base text-slate-600 leading-relaxed mb-3">
-                    {post.data.description}
-                  </p>
-                </div>
-                
-                <div class="flex flex-wrap items-center gap-4 text-sm text-slate-500 font-mono">
-                  <time datetime={post.data.published.toISOString()}>
-                    {formatDate(post.data.published)}
-                  </time>
-                </div>
-              </article>
+              <PostListItem
+                title={post.data.title}
+                description={post.data.description}
+                slug={post.slug}
+                published={post.data.published}
+                size="small"
+              />
             ))}
             
-            {/* View all posts link */}
+            <!-- {/* View all posts link */}
             <div class="pt-4">
               <a 
                 href="/archive" 
@@ -98,7 +80,7 @@ function formatDate(date: Date) {
               >
                 View all posts →
               </a>
-            </div>
+            </div> -->
           </div>
         </div>
         
@@ -137,17 +119,31 @@ function formatDate(date: Date) {
             </p>
             <div class="flex flex-col sm:flex-row gap-4 flex-wrap">
               {contactMethods.map(contact => (
-                <ContactLink 
+                <ExternalLink 
                   href={contact.href} 
                   external={contact.external}
                   id={contact.label === "Email" ? "email-link" : undefined}
                 >
                   {contact.label}
-                </ContactLink>
+                </ExternalLink>
               ))}
-              <ContactLink href="/friends">
+            </div>
+          </div>
+        </ContentSection>
+
+        <!-- Extras Links Section -->
+        <ContentSection title="Extras" id="extras">
+          <div class="space-y-4">
+            <p class="body-text text-base md:text-lg text-slate-600 leading-relaxed">
+              Discover more through these curated connections across the web.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 flex-wrap">
+              <ExternalLink href="/friends" external={false}>
                 Friends
-              </ContactLink>
+              </ExternalLink>
+              <ExternalLink href="https://www.travellings.cn/go.html">
+                Travellings
+              </ExternalLink>
             </div>
           </div>
         </ContentSection>
@@ -157,11 +153,9 @@ function formatDate(date: Date) {
           <div class="flex flex-col sm:flex-row justify-between items-center text-sm text-slate-500 font-mono">
             <div>© 2025 Alan Ye. All rights reserved.</div>
             <div class="mt-2 sm:mt-0">
-              <a 
-                href="https://www.travellings.cn/go.html" 
-                class="text-slate-600 hover:text-slate-900 transition-colors"
-              >
-                Travellings
+              Text content licensed under
+              <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" class="text-slate-600 hover:text-slate-900 transition-colors">
+                CC BY-SA 4.0
               </a>
             </div>
           </div>
@@ -319,19 +313,6 @@ function formatDate(date: Date) {
 
 <style>
   @reference "tailwindcss";
-
-  .hover-arrow {
-    @apply relative;
-  }
-
-  .hover-arrow .arrow {
-    @apply inline opacity-0 transform translate-x-[-10px] transition-all duration-300;
-    white-space: nowrap;
-  }
-
-  .hover-arrow:hover .arrow {
-    @apply opacity-100 translate-x-0;
-  }
 
   .content-section {
     @apply border-l-2 border-slate-200 pl-6 md:pl-8;

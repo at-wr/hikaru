@@ -12,7 +12,7 @@ export default defineConfig({
   markdown: {
     shikiConfig: {
       // Enable dual themes for light/dark mode support
-      theme: 'catppuccin-mocha',
+      theme: 'catppuccin-latte',
       wrap: true,
       // Enable proper syntax highlighting
       defaultColor: 'light',

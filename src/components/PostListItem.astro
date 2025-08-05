@@ -1,0 +1,134 @@
+---
+// Props for the post item
+export interface Props {
+  title: string;
+  description: string;
+  slug: string;
+  published: Date;
+  category?: string;
+  tags?: string[];
+  showCategory?: boolean;
+  showTags?: boolean;
+  size?: 'small' | 'medium' | 'large';
+}
+
+const { 
+  title, 
+  description, 
+  slug, 
+  published, 
+  category, 
+  tags = [], 
+  showCategory = false,
+  showTags = false,
+  size = 'medium' 
+} = Astro.props;
+
+// Helper function to format date
+function formatDate(date: Date) {
+  return new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+}
+
+// Size-based styling
+const sizeStyles = {
+  small: {
+    title: 'text-base md:text-lg',
+    description: 'text-sm',
+    spacing: 'space-y-3'
+  },
+  medium: {
+    title: 'text-xl md:text-2xl',
+    description: 'text-base',
+    spacing: 'space-y-4'
+  },
+  large: {
+    title: 'text-2xl md:text-3xl',
+    description: 'text-base',
+    spacing: 'space-y-4'
+  }
+};
+
+const currentSize = sizeStyles[size];
+---
+
+<article class="post-item border-b border-slate-200 pb-6 md:pb-8 last:border-b-0 group">
+  <div class={`${currentSize.spacing}`}>
+    <!-- Meta information -->
+    {(showCategory || showTags) && (
+      <div class="flex flex-wrap items-center gap-3 text-sm text-slate-500 font-mono">
+        {showCategory && category && (
+          <a 
+            href={`/archive/category/${category.toLowerCase().replace(/\s+/g, '-')}`}
+            class="inline-block px-2 py-1 bg-slate-100 text-slate-700 rounded text-sm font-medium hover:bg-slate-200 transition-colors"
+            onclick="event.stopPropagation()"
+          >
+            {category}
+          </a>
+        )}
+        <time datetime={published.toISOString()}>
+          {formatDate(published)}
+        </time>
+      </div>
+    )}
+
+    <!-- Title and Description wrapped in single link -->
+    <a href={`/archive/${slug}`} class="block group/post">
+      <h3 class={`${currentSize.title} font-light text-slate-900 group-hover/post:text-slate-600 transition-colors`}>
+        {title}
+        <span class="arrow inline-block transition-transform duration-300 ease-out">→</span>
+      </h3>
+      
+      <p class={`${currentSize.description} text-slate-600 leading-relaxed mt-2`}>
+        {description}
+      </p>
+    </a>
+
+    <!-- Tags -->
+    {showTags && tags.length > 0 && (
+      <div class="flex flex-wrap gap-2 text-sm">
+        {tags.map((tag: string) => (
+          <a 
+            href={`/archive/tag/${tag.toLowerCase().replace(/\s+/g, '-')}`}
+            class="text-slate-500 hover:text-slate-700 transition-colors"
+          >
+            #{tag}
+          </a>
+        ))}
+      </div>
+    )}
+  </div>
+</article>
+
+<style>
+  @reference "tailwindcss";
+
+  .post-item {
+    @apply relative;
+  }
+
+  .post-item {
+    @apply text-slate-900 hover:text-slate-600 transition-colors duration-300;
+    text-decoration: none;
+  }
+
+  .post-item .arrow {
+    @apply inline-block transition-transform duration-300 ease-out;
+    white-space: nowrap;
+  }
+
+  .post-item:hover .arrow {
+    @apply translate-x-1;
+  }
+
+
+  /* Ensure interactive elements stay above the main link */
+  .post-item a[onclick],
+  .post-item time {
+    position: relative;
+    z-index: 1;
+  }
+</style>

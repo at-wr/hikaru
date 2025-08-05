@@ -85,6 +85,11 @@ export const contactMethods: ContactMethod[] = [
     label: "Twitter",
     href: "https://twitter.com/Wr_Offi", 
     external: true
+  },
+  {
+    label: "Mastodon",
+    href: "https://mastodon.social/@wrye", 
+    external: true
   }
 ];
 
@@ -101,5 +106,5 @@ export const aboutContent = {
 };
 
 export const contactContent = {
-  description: "I'm always interested in new opportunities and collaborations. Feel free to reach out if you'd like to work together or just want to say hello."
+  description: "Always open to new friends and opportunities. Feel free to reach out if you have any questions, suggestions, or just want to say hi!",
 };
