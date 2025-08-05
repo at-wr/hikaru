@@ -132,13 +132,19 @@ const publishedDate = new Date(published).toLocaleDateString('en-US', {
 
   .blog-content :global(pre) {
     @apply p-6 rounded-lg overflow-x-auto mb-6 text-sm;
-    /* Let Shiki handle the background and text colors */
+    /* Let Shiki handle colors, only provide structure */
+    overflow-x: auto;
   }
 
   .blog-content :global(pre code) {
     @apply p-0;
-    /* Let Shiki handle all the styling */
-    background: transparent !important;
+    /* Let Shiki handle all syntax highlighting colors */
+    background: transparent;
+  }
+
+  /* Ensure fallback for plain text blocks without Shiki styling */
+  .blog-content :global(pre:not([class*="astro-code"])) {
+    @apply bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100;
   }
 
   .blog-content :global(a) {
