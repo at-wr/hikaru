@@ -18,14 +18,21 @@ export const experiences: Experience[] = [
     title: "Vice President",
     company: "Computerization",
     period: "2024 - 2025",
-    description: "Built and maintained web applications from concept to deployment. Worked closely with product teams to implement new features and improve existing functionality.",
+    description: "Participate in the management and framework design of the club. Lead the development of our open-source projects, including c13n, Enspire, etc.",
+    current: false
+  },
+  {
+    title: "Member",
+    company: "Computerization",
+    period: "2023 - Present",
+    description: "Contributes to various projects in club. Actively participates in club activities and workshops.",
     current: true
   },
   {
     title: "OSS Contributor", 
     company: "GitHub",
     period: "2019 - Present",
-    description: "Leading frontend development for enterprise applications, focusing on performance optimization and user experience improvements. Collaborated with cross-functional teams to deliver scalable solutions.",
+    description: "Hunting, pull requests for open-source projects that interest me.",
     current: true
   }
 ];
