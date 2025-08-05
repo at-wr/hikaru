@@ -2,7 +2,6 @@
 import Foundation from '../../../layouts/Foundation.astro';
 import { getCollection } from 'astro:content';
 
-export const prerender = true;
 export async function getStaticPaths() {
   const posts = await getCollection('posts', ({ data }) => !data.draft);
   const allTags = posts.flatMap(post => post.data.tags);

@@ -2,7 +2,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
-import cloudflare from '@astrojs/cloudflare';
 
 // https://astro.build/config
 export default defineConfig({
@@ -20,15 +19,7 @@ export default defineConfig({
     }
   },
   integrations: [
-    sitemap(),
-    cloudflare()
+    sitemap()
   ],
-  output: 'static',
-  adapter: cloudflare({
-    imageService: 'compile'
-  }),
-  redirects: {
-    // Blog posts: /posts/[slug] -> /archive/[slug]
-    "/posts/:slug": "/archive/:slug"
-  }
+  output: 'static'
 });
