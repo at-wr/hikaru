@@ -64,14 +64,20 @@ const publishedDate = new Date(published).toLocaleDateString('en-US', {
           </div>
         </div>
 
-        <!-- Back to blog link -->
-        <footer class="mt-16 pt-8 border-t border-slate-200">
-          <a 
-            href="/archive" 
-            class="inline-flex items-center text-slate-600 hover:text-slate-900 transition-colors text-sm"
-          >
-            ← Back to Archive
-          </a>
+        <!-- Blog Post Footer -->
+        <footer class="mt-16 pt-8 border-t border-slate-200 space-y-6">
+          <!-- Navigation & Copyright -->
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <a 
+              href="/archive" 
+              class="inline-flex items-center text-slate-600 hover:text-slate-900 transition-colors text-sm font-mono"
+            >
+              ← Back to Archive
+            </a>
+            <div class="text-sm text-slate-500 font-mono">
+              © {new Date().getFullYear()} Alan Ye. All rights reserved.
+            </div>
+          </div>
         </footer>
       </div>
     </article>

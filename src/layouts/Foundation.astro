@@ -36,7 +36,9 @@ const pageDescription = description || 'Place where I write, record, and share m
 		<title>{pageTitle}</title>
 	</head>
 	<body class={className}>
-		<Header />
+		<slot name="header">
+			<Header customTitle={title} />
+		</slot>
 		<slot />
 	</body>
 </html>

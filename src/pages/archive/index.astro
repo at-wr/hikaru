@@ -43,9 +43,9 @@ function formatDate(date: Date) {
           </p>
           
           <!-- Category links -->
-          <div class="flex flex-wrap gap-4 text-sm font-mono">
-            <span class="text-slate-500">Filter by:</span>
-            <a href="/archive" class="category-link active">All Posts</a>
+          <div class="flex flex-wrap gap-3 text-sm font-mono">
+            <span class="text-slate-500 font-mono">Filter:</span>
+            <a href="/archive" class="category-link active">All</a>
             {categories.map(category => (
               <a 
                 href={`/archive/category/${category.toLowerCase().replace(/\s+/g, '-')}`}

@@ -1,0 +1,167 @@
+---
+import cynosuraAvatar from "../assets/friends/cynosura.webp";
+import q1zhenAvatar from "../assets/friends/q1zhen.jpg";
+import yunyitangAvatar from "../assets/friends/yunyitang.png";
+import heuluckAvatar from "../assets/friends/heuluck.png";
+import Foundation from '../layouts/Foundation.astro';
+import ContactLink from '../components/ui/ContactLink.astro';
+import Header from '../components/Header.astro';
+
+const friends = [
+  {
+    name: "Cynosura",
+    url: "https://cynosura.one",
+    description: "Per aspera, ad astra.",
+    avatar: cynosuraAvatar
+  },
+  {
+    name: "q1zhen",
+    url: "https://q1z.dev",
+    description: "Place where I create, break, and write about things.",
+    avatar: q1zhenAvatar
+  },
+  {
+    name: "Yunyi’s Blog",
+    url: "https://www.yunyitang.me",
+    description: "Little squirrel Hopping around",
+    avatar: yunyitangAvatar
+  },
+  {
+    name: "Heuluck’s Blog",
+    url: "https://heuluck.top",
+    description: "随便写点东西记录一下",
+    avatar: heuluckAvatar
+  }
+];
+
+const pageTitle = "Alan's Friends";
+const pageDescription = "Place where I store the talented people I know.";
+---
+
+<Foundation title={pageTitle} description={pageDescription}>
+  
+  <!-- Custom Header with "Alan's" -->
+  <Fragment slot="header">
+    <Header customTitle="Alan's" />
+  </Fragment>
+  <div class="min-h-screen bg-white">
+    
+    <!-- Hero section -->
+    <main class="px-8 md:px-16 lg:px-24 py-16" style="view-transition-name: main-content;">
+      <div class="max-w-4xl mx-auto">
+        
+        <section class="mb-16">
+          <h1 class="text-4xl md:text-5xl font-light text-slate-900 mb-6 leading-tight">
+            Friends
+          </h1>
+          <p class="text-lg text-slate-600 leading-relaxed max-w-2xl">
+            Place where I store the talented people I know.
+          </p>
+        </section>
+
+        <!-- Friends Grid -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {friends.map((friend) => (
+            <a 
+              href={friend.url} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="friend-card group"
+            >
+              <div class="flex items-start space-x-4">
+                <div class="flex-shrink-0">
+                  <img 
+                    src={friend.avatar.src} 
+                    alt={friend.name}
+                    class="w-16 h-16 rounded-full object-cover"
+                  />
+                </div>
+                <div class="flex-1">
+                  <div class="flex items-start justify-between">
+                    <h3 class="text-lg font-medium text-slate-800 mb-2 group-hover:text-slate-700 transition-colors">
+                      {friend.name}
+                    </h3>
+                    <svg 
+                      class="arrow-icon" 
+                      width="20" 
+                      height="20" 
+                      viewBox="0 0 24 24" 
+                      fill="none" 
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path 
+                        d="M7 17L17 7M17 7H7M17 7V17" 
+                        stroke="currentColor" 
+                        stroke-width="2" 
+                        stroke-linecap="round" 
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </div>
+                  <p class="text-slate-600 text-sm leading-relaxed">
+                    {friend.description}
+                  </p>
+                </div>
+              </div>
+            </a>
+          ))}
+        </section>
+
+        <!-- Add Your Site Section -->
+        <section class="mt-16 pt-12 border-t border-slate-200">
+          <h2 class="text-2xl md:text-3xl font-light text-slate-900 mb-4">
+            Want to connect?
+          </h2>
+          <p class="text-lg text-slate-600 leading-relaxed mb-6 max-w-md">
+            If we've worked together or you think we should connect, reach out and I'll add you to this list.
+          </p>
+          <ContactLink href="/#contact">
+            Get in Touch
+          </ContactLink>
+        </section>
+
+      </div>
+    </main>
+  </div>
+</Foundation>
+
+<!-- Footer Disclaimer -->
+<footer class="px-8 md:px-16 lg:px-24 py-8 border-t border-slate-200">
+  <div class="max-w-4xl mx-auto">
+    <p class="text-sm text-slate-500 font-mono">
+       All opinions expressed by individuals are their own.
+    </p>
+  </div>
+</footer>
+
+<style>
+  @reference "tailwindcss";
+
+  .friend-card {
+    @apply block p-6 bg-white border border-slate-200 rounded-lg shadow-sm;
+    @apply hover:border-slate-300 hover:bg-slate-50 hover:-translate-y-0.5;
+    @apply active:translate-y-0 active:shadow-sm;
+    @apply transition-all duration-300 ease-out;
+    @apply relative overflow-hidden;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .arrow-icon {
+    @apply text-slate-400 w-5 h-5;
+    @apply transition-all duration-300 ease-out;
+    @apply opacity-0 translate-x-2 -translate-y-1;
+    @apply group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0;
+    @apply group-hover:text-slate-600;
+    flex-shrink: 0;
+  }
+
+  /* Shimmer effect */
+  .friend-card::before {
+    content: '';
+    @apply absolute inset-0 -translate-x-full;
+    background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.1), transparent);
+    @apply group-hover:translate-x-full;
+    transition: transform 0.6s ease;
+  }
+</style>

@@ -1,3 +1,12 @@
+---
+interface Props {
+  customTitle?: string;
+}
+
+const { customTitle } = Astro.props;
+const displayTitle = customTitle || "Alan Ye";
+---
+
 <style>
     /* Hide system scrollbar only on desktop (md and up) */
     @media (min-width: 768px) {
@@ -86,7 +95,7 @@
                 style="writing-mode: vertical-rl; text-orientation: mixed;"
             >
                 <span class="text-3xl lg:text-4xl font-light text-slate-900">
-                    Alan Ye
+                    {displayTitle}
                 </span>
             </a>
         </div>
@@ -111,7 +120,7 @@
             id="site-logo-mobile"
         >
             <span class="text-lg font-light text-slate-900">
-                Alan Ye
+                {displayTitle}
             </span>
         </a>
     </div>

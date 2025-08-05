@@ -14,7 +14,7 @@ const recentPosts = await getCollection('posts', ({ data }) => {
 
 // Generate dynamic description from recent posts
 const dynamicDescription = recentPosts.length > 0 
-  ? `Architecting human-centered digital experiences through code. Place where I write, record, and share my thoughts. Latest posts: ${recentPosts.map(post => post.data.title).join(', ')}.`
+  ? `Architecting human-centered digital experiences through code. Place where I write, record, and share my thoughts.`
   : undefined; // Falls back to Foundation's default
 ---
 

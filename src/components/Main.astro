@@ -135,7 +135,7 @@ function formatDate(date: Date) {
             <p class="body-text text-base md:text-lg text-slate-600 leading-relaxed">
               {contactContent.description}
             </p>
-            <div class="flex flex-col sm:flex-row gap-4">
+            <div class="flex flex-col sm:flex-row gap-4 flex-wrap">
               {contactMethods.map(contact => (
                 <ContactLink 
                   href={contact.href} 
@@ -145,6 +145,9 @@ function formatDate(date: Date) {
                   {contact.label}
                 </ContactLink>
               ))}
+              <ContactLink href="/friends">
+                Friends
+              </ContactLink>
             </div>
           </div>
         </ContentSection>
@@ -153,7 +156,14 @@ function formatDate(date: Date) {
         <div class="border-t border-slate-200 pt-8 mt-16">
           <div class="flex flex-col sm:flex-row justify-between items-center text-sm text-slate-500 font-mono">
             <div>© 2025 Alan Ye. All rights reserved.</div>
-            <div class="mt-2 sm:mt-0">Built with Astro & Tailwind CSS</div>
+            <div class="mt-2 sm:mt-0">
+              <a 
+                href="https://www.travellings.cn/go.html" 
+                class="text-slate-600 hover:text-slate-900 transition-colors"
+              >
+                Travellings
+              </a>
+            </div>
           </div>
         </div>
       </div>
