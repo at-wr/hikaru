@@ -20,5 +20,9 @@ export default defineConfig({
   },
   integrations: [
     sitemap()
-  ]
+  ],
+  redirects: {
+    // Blog posts: /posts/[slug] -> /archive/[slug]
+    "/posts/[...slug]": "/archive/[...slug]"
+  }
 });
