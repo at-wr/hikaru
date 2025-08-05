@@ -54,10 +54,15 @@ const {
   }
 
   .hero-tagline span {
-    animation: fontBreathe 2s ease-in-out infinite;
     display: inline-block;
     transition: font-variation-settings 0.2s;
     white-space: nowrap;
+  }
+
+  @media (min-width: 769px) {
+    .hero-tagline span {
+      animation: fontBreathe 2s ease-in-out infinite;
+    }
   }
 
   @media (max-width: 768px) {
@@ -70,7 +75,6 @@ const {
     .hero-tagline span {
       white-space: normal;
       display: inline;
-      animation: none;
     }
   }
 
