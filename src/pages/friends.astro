@@ -61,7 +61,7 @@ const pageDescription = "Place where I store the talented people I know.";
             Friends
           </h1>
           <p class="text-lg text-slate-600 leading-relaxed max-w-2xl">
-            Place where I store the talented people I know.
+            Place where I store the talented people I know. Ramdomly ordered.
           </p>
         </section>
 
@@ -73,8 +73,6 @@ const pageDescription = "Place where I store the talented people I know.";
               target="_blank" 
               rel="noopener noreferrer"
               class="friend-card group"
-              data-friend-card
-              style={`--order: ${Math.floor(Math.random() * 1000)}`}
             >
               <div class="flex items-start space-x-4">
                 <div class="flex-shrink-0">
@@ -115,11 +113,27 @@ const pageDescription = "Place where I store the talented people I know.";
           ))}
         </section>
         
-        <style>
-          [data-friend-card] {
-            order: var(--order);
-          }
-        </style>
+        <script is:inline>
+          // Apply random order to friend cards using CSS Grid, optimized for no flicker
+          (function() {
+            const cards = document.querySelectorAll('.friend-card');
+            if (cards.length === 0) return;
+            
+            // Pre-shuffle and apply order immediately to prevent flicker
+            const indices = Array.from({ length: cards.length }, (_, i) => i);
+            
+            // Fisher-Yates shuffle
+            for (let i = indices.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.random() * (i + 1));
+              [indices[i], indices[j]] = [indices[j], indices[i]];
+            }
+            
+            // Apply order immediately using inline styles to prevent layout shift
+            cards.forEach((card, originalIndex) => {
+              card.style.order = indices[originalIndex];
+            });
+          })();
+        </script>
 
         <!-- Add Your Site Section -->
         <section class="mt-16 pt-12 border-t border-slate-200">
@@ -159,6 +173,7 @@ const pageDescription = "Place where I store the talented people I know.";
     @apply relative overflow-hidden;
     text-decoration: none;
     color: inherit;
+    order: 0;
   }
 
   .arrow-icon {
