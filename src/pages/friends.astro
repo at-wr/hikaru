@@ -39,8 +39,7 @@ const friends = [
     description: "随便写点东西记录一下",
     avatar: heuluckAvatar
   } 
-].sort(() => Math.random() - 0.5);
-
+]
 const pageTitle = "Alan's Friends";
 const pageDescription = "Place where I store the talented people I know.";
 ---
@@ -74,6 +73,8 @@ const pageDescription = "Place where I store the talented people I know.";
               target="_blank" 
               rel="noopener noreferrer"
               class="friend-card group"
+              data-friend-card
+              style={`--order: ${Math.floor(Math.random() * 1000)}`}
             >
               <div class="flex items-start space-x-4">
                 <div class="flex-shrink-0">
@@ -113,6 +114,12 @@ const pageDescription = "Place where I store the talented people I know.";
             </a>
           ))}
         </section>
+        
+        <style>
+          [data-friend-card] {
+            order: var(--order);
+          }
+        </style>
 
         <!-- Add Your Site Section -->
         <section class="mt-16 pt-12 border-t border-slate-200">
