@@ -10,7 +10,8 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
   prefetch: {
-    prefetchAll: true
+    prefetchAll: true,
+    defaultStrategy: 'viewport',
   },
   markdown: {
     shikiConfig: {
