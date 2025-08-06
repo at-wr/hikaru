@@ -62,7 +62,7 @@ const publishedDate = new Date(published).toLocaleDateString('en-US', {
         </header>
 
         <!-- Article content -->
-        <div class="prose prose-lg max-w-none">
+        <div class="prose prose-lg max-w-none min-w-0">
           <div class="blog-content">
             <slot />
           </div>
@@ -97,6 +97,9 @@ const publishedDate = new Date(published).toLocaleDateString('en-US', {
   
   .blog-content {
     @apply text-slate-700 leading-relaxed;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
   }
 
   .blog-content :global(h1) {
@@ -121,6 +124,8 @@ const publishedDate = new Date(published).toLocaleDateString('en-US', {
 
   .blog-content :global(p) {
     @apply mb-6 text-base leading-relaxed;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
   .blog-content :global(ul), 
@@ -130,6 +135,8 @@ const publishedDate = new Date(published).toLocaleDateString('en-US', {
 
   .blog-content :global(li) {
     @apply text-base leading-relaxed;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
   .blog-content :global(ul li) {
@@ -142,16 +149,22 @@ const publishedDate = new Date(published).toLocaleDateString('en-US', {
 
   .blog-content :global(blockquote) {
     @apply border-l-4 border-slate-300 pl-6 py-2 my-6 italic text-slate-600;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
   .blog-content :global(code) {
     @apply bg-slate-100 text-slate-800 px-2 py-1 rounded text-sm font-mono;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
   .blog-content :global(pre) {
     @apply p-6 rounded-lg overflow-x-auto mb-6 text-sm;
     /* Let Shiki handle colors, only provide structure */
     overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
   }
 
   .blog-content :global(pre code) {
@@ -167,6 +180,8 @@ const publishedDate = new Date(published).toLocaleDateString('en-US', {
 
   .blog-content :global(a) {
     @apply text-slate-900 underline hover:text-slate-600 transition-colors;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
   .blog-content :global(img) {
@@ -175,6 +190,8 @@ const publishedDate = new Date(published).toLocaleDateString('en-US', {
 
   .blog-content :global(table) {
     @apply w-full border-collapse border border-slate-300 mb-6;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
   .blog-content :global(th), 
