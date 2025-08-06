@@ -1,5 +1,6 @@
 ---
 import Foundation from "../layouts/Foundation.astro";
+import Header from "../components/Header.astro";
 import Main from "../components/Main.astro";
 import { getCollection } from 'astro:content';
 
@@ -19,5 +20,8 @@ const dynamicDescription = recentPosts.length > 0
 ---
 
 <Foundation description={dynamicDescription}>
+  <Fragment slot="header">
+    <Header customTitle="@at-wr" />
+  </Fragment>
   <Main />
 </Foundation>

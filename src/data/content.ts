@@ -101,7 +101,7 @@ export const heroContent = {
 
 export const aboutContent = {
   paragraphs: [
-    "I'm a full-stack developer, currently a high school student. Have always been fascinated about building things that matter. I enjoy solving complex problems and bringing ideas to life through code.",
+    "My name is Alan. I'm a full-stack developer, currently a high school student. Have always been fascinated about building things that matter. I enjoy solving complex problems and bringing ideas to life through code.",
     "Clean design and robust engineering are at the core of my work, and I strive to create stuffs that are not only functional but also delightful to use."
   ]
 };
