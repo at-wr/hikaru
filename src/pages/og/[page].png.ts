@@ -14,7 +14,7 @@ export async function getStaticPaths() {
 
 const pageData = {
   home: {
-    title: 'Alan Ye (@at_wr)',
+    title: 'Alan Ye (@at-wr)',
     description: 'Place where I write, record, and share my thoughts.',
   },
   archive: {
