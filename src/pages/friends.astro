@@ -3,6 +3,7 @@ import cynosuraAvatar from "../assets/friends/cynosura.webp";
 import q1zhenAvatar from "../assets/friends/q1zhen.jpg";
 import yunyitangAvatar from "../assets/friends/yunyitang.png";
 import heuluckAvatar from "../assets/friends/heuluck.png";
+import librAvatar from "../assets/friends/libr.png";
 import Foundation from '../layouts/Foundation.astro';
 import ContactLink from '../components/ui/ContactLink.astro';
 import Header from '../components/Header.astro';
@@ -15,24 +16,30 @@ const friends = [
     avatar: cynosuraAvatar
   },
   {
+    name: "LiBr",
+    url: "https://nvme0n1p.dev",
+    description: "A place where I write about my thoughts and experiences.",
+    avatar: librAvatar
+  },
+  {
     name: "q1zhen",
     url: "https://q1z.dev",
     description: "Place where I create, break, and write about things.",
     avatar: q1zhenAvatar
   },
   {
-    name: "Yunyi’s Blog",
+    name: "Yunyi's Blog",
     url: "https://www.yunyitang.me",
     description: "Little squirrel Hopping around",
     avatar: yunyitangAvatar
   },
   {
-    name: "Heuluck’s Blog",
+    name: "Heuluck's Blog",
     url: "https://heuluck.top",
     description: "随便写点东西记录一下",
     avatar: heuluckAvatar
-  }
-];
+  } 
+].sort(() => Math.random() - 0.5);
 
 const pageTitle = "Alan's Friends";
 const pageDescription = "Place where I store the talented people I know.";
