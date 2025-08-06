@@ -33,7 +33,8 @@ const jsonLd = {
     "@id": Astro.url.href
   },
   "articleSection": category,
-  "keywords": tags.join(", ")
+  "keywords": tags.join(", "),
+  "image": `${Astro.site?.href || "https://wrye.dev/"}og/posts/${post.slug}.png`
 };
 
 // Format date
