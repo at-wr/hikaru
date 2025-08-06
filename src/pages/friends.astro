@@ -4,6 +4,7 @@ import q1zhenAvatar from "../assets/friends/q1zhen.jpg";
 import yunyitangAvatar from "../assets/friends/yunyitang.png";
 import heuluckAvatar from "../assets/friends/heuluck.png";
 import librAvatar from "../assets/friends/libr.png";
+import lakrAvatar from "../assets/friends/lakr.png";
 import Foundation from '../layouts/Foundation.astro';
 import ContactLink from '../components/ui/ContactLink.astro';
 import Header from '../components/Header.astro';
@@ -38,10 +39,16 @@ const friends = [
     url: "https://heuluck.top",
     description: "随便写点东西记录一下",
     avatar: heuluckAvatar
-  } 
+  },
+  {
+    name: "砍砍",
+    url: "https://www.qaq.wiki",
+    description: "藏一片星光在我背包",
+    avatar: lakrAvatar
+  }
 ]
-const pageTitle = "Alan's Friends";
-const pageDescription = "Place where I store the talented people I know.";
+const pageTitle = "Friends 友人";
+const pageDescription = "Place where I list the talented people I know.";
 ---
 
 <Foundation title={pageTitle} description={pageDescription}>
@@ -61,7 +68,7 @@ const pageDescription = "Place where I store the talented people I know.";
             Friends
           </h1>
           <p class="text-lg text-slate-600 leading-relaxed max-w-2xl">
-            Place where I store the talented people I know. Ramdomly ordered.
+            Place where I list the talented people I know. Randomly shuffled.
           </p>
         </section>
 
