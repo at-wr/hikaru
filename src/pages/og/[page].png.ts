@@ -83,7 +83,7 @@ const ogImage: APIRoute = async ({ params }) => {
             props: {
               style: {
                 fontWeight: 400,
-                fontSize: '26px',
+                fontSize: '32px',
                 lineHeight: '1.35',
                 letterSpacing: '-0.02em',
                 color: '#20242A',

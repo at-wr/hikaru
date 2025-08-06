@@ -38,7 +38,7 @@ const ogImage: APIRoute = async ({ props }) => {
   };
 
   const title = truncateText(post.data.title, 60);
-  const description = truncateText(post.data.description || post.body?.slice(0, 200) || '', 120);
+  const description = truncateText(post.data.description || post.body?.slice(0, 300) || '', 200);
 
   const svg = await satori(
     {
