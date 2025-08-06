@@ -71,19 +71,20 @@ const publishedDate = new Date(published).toLocaleDateString('en-US', {
         <!-- Blog Post Footer -->
         <footer class="mt-16 pt-8 border-t border-slate-200 space-y-6">
           <!-- Navigation & Copyright -->
-          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
             <a 
               href="/archive" 
               class="inline-flex items-center text-slate-600 hover:text-slate-900 transition-colors text-sm font-mono"
             >
               ← Back to Archive
             </a>
-            <div class="text-sm text-slate-500 font-mono">
-              © {new Date().getFullYear()} Alan Ye. 
-              Text licensed under
-              <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" class="text-slate-700 underline hover:text-slate-900 transition-colors">
-                CC BY-SA 4.0
-              </a>
+            <div class="text-sm text-slate-500 font-mono text-center sm:text-right">
+              <span class="whitespace-nowrap">© {new Date().getFullYear()} Alan Ye.</span>
+              <span class="whitespace-nowrap"> Text licensed under 
+                <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" class="text-slate-700 underline hover:text-slate-900 transition-colors">
+                  CC BY-SA 4.0
+                </a>
+              </span>
             </div>
           </div>
         </footer>
