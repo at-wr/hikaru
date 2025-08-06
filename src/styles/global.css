@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap') layer(fonts);
 @import "tailwindcss";
 
 :root {
@@ -7,8 +6,8 @@
 
 /* Ensure Astro/Shiki syntax highlighting colors are preserved */
 .astro-code {
-  color: var(--shiki-color-text);
-  background-color: var(--shiki-color-background);
+  color: var(--astro-code-color-text);
+  background-color: var(--astro-code-color-background);
 }
 
 /* Fallback for code blocks without language - only apply if no color vars */
@@ -28,7 +27,7 @@
 /* Base typography with Tailwind classes */
 @layer base {
   html {
-    font-family: -apple-system, BlinkMacSystemFont, "Inter", system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Inter Variable", system-ui, sans-serif;
     font-feature-settings: 'liga' 1, 'kern' 1, 'calt' 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
