@@ -8,7 +8,33 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const { title, published, category, tags, description } = post.data;
+const { title, published, category, tags, description, language = 'en' } = post.data;
+
+// Generate JSON-LD structured data
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": title,
+  "description": description || title,
+  "datePublished": published.toISOString(),
+  "inLanguage": language?.replace("_", "-") || "en",
+  "author": {
+    "@type": "Person",
+    "name": "Alan Ye",
+    "url": Astro.site?.href || "https://wrye.dev"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Alan Ye",
+    "url": Astro.site?.href || "https://wrye.dev"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": Astro.url.href
+  },
+  "articleSection": category,
+  "keywords": tags.join(", ")
+};
 
 // Format date
 const publishedDate = new Date(published).toLocaleDateString('en-US', {
@@ -18,10 +44,12 @@ const publishedDate = new Date(published).toLocaleDateString('en-US', {
 });
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} language={language}>
   <Fragment slot="header">
     <Header customTitle="Alan's Blog" />
   </Fragment>
+  
+  <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
   <div class="min-h-screen bg-white">
     <!-- Article content -->
     <article class="px-8 md:px-16 lg:px-24 py-16" style="view-transition-name: blog-content;">

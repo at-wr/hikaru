@@ -8,15 +8,16 @@ interface Props {
 	title?: string;
 	description?: string;
 	class?: string;
+	language?: string;
 }
 
-const { title, description, class: className } = Astro.props;
+const { title, description, class: className, language = 'en' } = Astro.props;
 const pageTitle = title ? `${title} - Alan Ye` : 'Alan Ye (@at-wr)';
 const pageDescription = description || 'Place where I write, record, and share my thoughts.';
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={language}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -35,6 +36,7 @@ const pageDescription = description || 'Place where I write, record, and share m
 		<meta name="generator" content={Astro.generator} />
 		<ClientRouter />
 		<title>{pageTitle}</title>
+		<slot name="head" />
 	</head>
 	<body class={className}>
 		<slot name="header">

@@ -5,9 +5,10 @@ interface Props {
   title?: string;
   description?: string;
   variant?: 'default' | 'blog' | 'minimal';
+  language?: string;
 }
 
-const { title, description, variant = 'default' } = Astro.props;
+const { title, description, variant = 'default', language } = Astro.props;
 
 const layoutClasses = {
   default: "min-h-screen bg-white",
@@ -16,8 +17,9 @@ const layoutClasses = {
 };
 ---
 
-<Foundation title={title} description={description} class={layoutClasses[variant]}>
+<Foundation title={title} description={description} class={layoutClasses[variant]} language={language}>
   <slot name="header" slot="header" />
+  <slot name="head" slot="head" />
   <main class="flex-1">
     <slot />
   </main>
