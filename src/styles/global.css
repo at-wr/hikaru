@@ -27,15 +27,16 @@
 /* Base typography with Tailwind classes */
 @layer base {
   html {
-    font-family: "Inter Variable", system-ui, sans-serif;
+    font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     font-feature-settings: 'liga' 1, 'kern' 1, 'calt' 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
     word-spacing: -0.01em;
+    scroll-behavior: smooth;
   }
 
-  @supports (font-family: -apple-system) {
+  /* @supports (font-family: -apple-system) {
     html {
       font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
       font-feature-settings: 'liga' 1, 'kern' 1, 'calt' 1;
@@ -44,7 +45,7 @@
       letter-spacing: normal;
       word-spacing: normal;
     }
-  }
+  } */
 }
 
 /* View transition animations */

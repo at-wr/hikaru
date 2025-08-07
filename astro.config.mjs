@@ -1,11 +1,22 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, fontProviders } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://wrye.dev',
+  experimental: {
+    fonts: [
+      {
+        provider: fontProviders.google(),
+        name: 'Inter',
+        cssVariable: '--font-inter',
+        weights: ['100 900'],
+        // display: 'swap',
+      }
+    ]
+  },
   vite: {
     plugins: [tailwindcss()]
   },
