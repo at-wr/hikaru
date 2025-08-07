@@ -13,7 +13,7 @@ export default defineConfig({
         name: 'Inter',
         cssVariable: '--font-inter',
         weights: ['100 900'],
-        // display: 'swap',
+        subsets: ['latin', 'latin-ext'],
       }
     ]
   },
