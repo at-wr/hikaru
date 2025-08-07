@@ -8,320 +8,379 @@ import ExternalLink from "./ui/ExternalLink.astro";
 import PostListItem from "./PostListItem.astro";
 
 // Import data from centralized content file
-import { 
-  skills, 
-  experiences, 
-  projects, 
-  contactMethods, 
-  heroContent, 
-  aboutContent, 
-  contactContent 
+import {
+    skills,
+    experiences,
+    projects,
+    contactMethods,
+    heroContent,
+    aboutContent,
+    contactContent,
 } from "../data/content";
 
 // Import blog posts
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
 
 // Get recent blog posts (latest 3)
-const recentPosts = await getCollection('posts', ({ data }) => {
-  return !data.draft;
-}).then(posts => 
-  posts
-    .sort((a, b) => new Date(b.data.published).getTime() - new Date(a.data.published).getTime())
-    .slice(0, 3)
+const recentPosts = await getCollection("posts", ({ data }) => {
+    return !data.draft;
+}).then((posts) =>
+    posts
+        .sort(
+            (a, b) =>
+                new Date(b.data.published).getTime() -
+                new Date(a.data.published).getTime(),
+        )
+        .slice(0, 3),
 );
-
 ---
 
 <div class="min-h-screen bg-white">
     <!-- Hero Section -->
-    <HeroSection 
-      subtitle={heroContent.subtitle}
-    />
-    
+    <HeroSection subtitle={heroContent.subtitle} />
+
     <!-- Main Content -->
-    <main id="main-content" class="px-8 md:px-16 lg:px-24 pb-24 content-container" style="view-transition-name: main-content;">
-      <div class="max-w-4xl mx-auto space-y-16 md:space-y-24">
-        
-        <!-- About Section -->
-        <ContentSection title="About" id="about">
-          <div class="space-y-4">
-            {aboutContent.paragraphs.map(paragraph => (
-              <p class="body-text text-base md:text-lg text-slate-600 leading-relaxed">
-                {paragraph}
-              </p>
-            ))}
-          </div>
-        </ContentSection>
-        
-        <!-- Blog Section -->
-        <div class="content-section border-l-2 border-slate-200 pl-6 md:pl-8" id="blog">
-          <h2 class="section-heading text-2xl md:text-3xl lg:text-4xl text-slate-900 mb-4 md:mb-6 tracking-wide">
-            <a href="/archive" class="hover:text-slate-600 transition-colors" style="text-decoration: none;">
-              Recent Posts
-            </a>
-          </h2>
-          <div class="space-y-6">
-            {recentPosts.map(post => (
-              <PostListItem
-                title={post.data.title}
-                description={post.data.description}
-                slug={post.slug}
-                published={post.data.published}
-                size="small"
-              />
-            ))}
-            
-            <!-- {/* View all posts link */}
+    <main
+        id="main-content"
+        class="px-8 md:px-16 lg:px-24 pb-24 content-container"
+        style="view-transition-name: main-content;"
+    >
+        <div class="max-w-4xl mx-auto space-y-16 md:space-y-24">
+            <!-- About Section -->
+            <ContentSection title="About" id="about">
+                <div class="space-y-4">
+                    {
+                        aboutContent.paragraphs.map((paragraph) => (
+                            <p class="body-text text-base md:text-lg text-slate-600 leading-relaxed">
+                                {paragraph}
+                            </p>
+                        ))
+                    }
+                </div>
+            </ContentSection>
+
+            <!-- Blog Section -->
+            <div
+                class="content-section border-l-2 border-slate-200 pl-6 md:pl-8"
+                id="blog"
+            >
+                <h2
+                    class="section-heading text-2xl md:text-3xl lg:text-4xl text-slate-900 mb-4 md:mb-6 tracking-wide"
+                >
+                    <a
+                        href="/archive"
+                        class="hover:text-slate-600 transition-colors"
+                        style="text-decoration: none;"
+                    >
+                        Recent Posts
+                    </a>
+                </h2>
+                <div class="space-y-6">
+                    {
+                        recentPosts.map((post) => (
+                            <PostListItem
+                                title={post.data.title}
+                                description={post.data.description}
+                                slug={post.slug}
+                                published={post.data.published}
+                                size="small"
+                            />
+                        ))
+                    }
+
+                    <!-- {/* View all posts link */}
             <div class="pt-4">
-              <a 
-                href="/archive" 
+              <a
+                href="/archive"
                 class="inline-flex items-center text-slate-900 hover:text-slate-600 transition-colors text-sm"
               >
                 View all posts →
               </a>
             </div> -->
-          </div>
-        </div>
-        
-        <!-- Skills Section -->
-        <ContentSection title="Skills" id="skills">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {skills.map(skillGroup => (
-              <SkillsGroup title={skillGroup.title} skills={skillGroup.skills} />
-            ))}
-          </div>
-        </ContentSection>
+                </div>
+            </div>
 
-        <!-- Experience Section -->
-        <ContentSection title="Experience" id="experience">
-          <div class="space-y-8">
-            {experiences.map(exp => (
-              <ExperienceItem {...exp} />
-            ))}
-          </div>
-        </ContentSection>
-        
-        <!-- Projects Section -->
-        <ContentSection title="Projects" id="projects">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {projects.map(project => (
-              <ProjectCard {...project} />
-            ))}
-          </div>
-        </ContentSection>
-        
-        <!-- Contact Section -->
-        <ContentSection title="Contact" id="contact">
-          <div class="space-y-4">
-            <p class="body-text text-base md:text-lg text-slate-600 leading-relaxed">
-              {contactContent.description}
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 flex-wrap">
-              {contactMethods.map(contact => (
-                <ExternalLink 
-                  href={contact.href} 
-                  external={contact.external}
-                  id={contact.label === "Email" ? "email-link" : undefined}
-                  rel={contact.rel || undefined}
+            <!-- Skills Section -->
+            <ContentSection title="Skills" id="skills">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {
+                        skills.map((skillGroup) => (
+                            <SkillsGroup
+                                title={skillGroup.title}
+                                skills={skillGroup.skills}
+                            />
+                        ))
+                    }
+                </div>
+            </ContentSection>
+
+            <!-- Experience Section -->
+            <ContentSection title="Experience" id="experience">
+                <div class="space-y-8">
+                    {experiences.map((exp) => <ExperienceItem {...exp} />)}
+                </div>
+            </ContentSection>
+
+            <!-- Projects Section -->
+            <ContentSection title="Projects" id="projects">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {projects.map((project) => <ProjectCard {...project} />)}
+                </div>
+            </ContentSection>
+
+            <!-- Contact Section -->
+            <ContentSection title="Contact" id="contact">
+                <div class="space-y-4">
+                    <p
+                        class="body-text text-base md:text-lg text-slate-600 leading-relaxed"
+                    >
+                        {contactContent.description}
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 flex-wrap">
+                        {
+                            contactMethods.map((contact) => (
+                                <ExternalLink
+                                    href={contact.href}
+                                    external={contact.external}
+                                    id={
+                                        contact.label === "Email"
+                                            ? "email-link"
+                                            : undefined
+                                    }
+                                    rel={contact.rel || undefined}
+                                >
+                                    {contact.label}
+                                </ExternalLink>
+                            ))
+                        }
+                    </div>
+                </div>
+            </ContentSection>
+
+            <!-- Extras Links Section -->
+            <ContentSection title="Extras" id="extras">
+                <div class="space-y-4">
+                    <p
+                        class="body-text text-base md:text-lg text-slate-600 leading-relaxed"
+                    >
+                        Discover more through these curated connections across
+                        the web.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 flex-wrap">
+                        <ExternalLink href="/friends" external={false}>
+                            Friends
+                        </ExternalLink>
+                        <ExternalLink
+                            href="https://www.travellings.cn/plain.html"
+                        >
+                            Travellings
+                        </ExternalLink>
+                    </div>
+                </div>
+            </ContentSection>
+
+            <!-- Footer -->
+            <div class="border-t border-slate-200 pt-8 mt-16">
+                <div
+                    class="flex flex-col sm:flex-row justify-between items-center text-sm text-slate-500 font-mono"
                 >
-                  {contact.label}
-                </ExternalLink>
-              ))}
+                    <div class="whitespace-nowrap">
+                        Designed by Alan. All rights reserved.
+                    </div>
+                    <div class="mt-2 sm:mt-0 whitespace-nowrap">
+                        Text licensed under
+                        <a
+                            href="https://creativecommons.org/licenses/by-sa/4.0/"
+                            target="_blank"
+                            class="text-slate-700 underline hover:text-slate-900 transition-colors"
+                        >
+                            CC BY-SA 4.0
+                        </a>
+                    </div>
+                </div>
             </div>
-          </div>
-        </ContentSection>
-
-        <!-- Extras Links Section -->
-        <ContentSection title="Extras" id="extras">
-          <div class="space-y-4">
-            <p class="body-text text-base md:text-lg text-slate-600 leading-relaxed">
-              Discover more through these curated connections across the web.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 flex-wrap">
-              <ExternalLink href="/friends" external={false}>
-                Friends
-              </ExternalLink>
-              <ExternalLink href="https://www.travellings.cn/go.html">
-                Travellings
-              </ExternalLink>
-            </div>
-          </div>
-        </ContentSection>
-        
-        <!-- Footer -->
-        <div class="border-t border-slate-200 pt-8 mt-16">
-          <div class="flex flex-col sm:flex-row justify-between items-center text-sm text-slate-500 font-mono">
-            <div class="whitespace-nowrap">Designed by Alan. All rights reserved.</div>
-            <div class="mt-2 sm:mt-0 whitespace-nowrap">
-              Text licensed under 
-              <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" class="text-slate-700 underline hover:text-slate-900 transition-colors">
-                CC BY-SA 4.0
-              </a>
-            </div>
-          </div>
         </div>
-      </div>
     </main>
 </div>
 
 <script>
-  // Section heading font weight animation based on scroll position
-  let ticking = false;
-  let cachedElements: { element: HTMLElement; offsetTop: number; height: number }[] = [];
-  let windowHeight = window.innerHeight;
-  let lastScrollY = 0;
+    // Section heading font weight animation based on scroll position
+    let ticking = false;
+    let cachedElements: {
+        element: HTMLElement;
+        offsetTop: number;
+        height: number;
+    }[] = [];
+    let windowHeight = window.innerHeight;
+    let lastScrollY = 0;
 
-  // Cache elements and their positions
-  function cacheElements() {
-    const sectionHeadings = document.querySelectorAll('.section-heading');
-    cachedElements = Array.from(sectionHeadings).map((heading) => {
-      const rect = heading.getBoundingClientRect();
-      const offsetTop = rect.top + window.scrollY;
-      return {
-        element: heading as HTMLElement,
-        offsetTop,
-        height: rect.height
-      };
-    });
-    windowHeight = window.innerHeight;
-  }
+    // Cache elements and their positions
+    function cacheElements() {
+        const sectionHeadings = document.querySelectorAll(".section-heading");
+        cachedElements = Array.from(sectionHeadings).map((heading) => {
+            const rect = heading.getBoundingClientRect();
+            const offsetTop = rect.top + window.scrollY;
+            return {
+                element: heading as HTMLElement,
+                offsetTop,
+                height: rect.height,
+            };
+        });
+        windowHeight = window.innerHeight;
+    }
 
-  function updateSectionHeadings() {
-    const scrollY = window.scrollY;
-    const scrollDelta = Math.abs(scrollY - lastScrollY);
-    const viewportCenter = scrollY + (windowHeight / 2);
-    const maxDistance = windowHeight / 2;
+    function updateSectionHeadings() {
+        const scrollY = window.scrollY;
+        const scrollDelta = Math.abs(scrollY - lastScrollY);
+        const viewportCenter = scrollY + windowHeight / 2;
+        const maxDistance = windowHeight / 2;
 
-    // For fast scrolling, reduce animation frequency
-    const isScrollingFast = scrollDelta > 20;
-    
-    cachedElements.forEach((item, index) => {
-      const elementCenter = item.offsetTop + (item.height / 2);
-      const distanceFromCenter = Math.abs(elementCenter - viewportCenter);
-      
-      // Skip elements that are far from viewport during fast scrolling
-      if (isScrollingFast && distanceFromCenter > windowHeight) {
-        return;
-      }
-      
-      // Calculate proximity factor (1 when in center, 0 when at max distance)
-      const proximityFactor = Math.max(0, 1 - (distanceFromCenter / maxDistance));
-      
-      // Font weight range: 300 (light) to 600 (semibold)
-      const minWeight = 300;
-      const maxWeight = 600;
-      const fontWeight = Math.round(minWeight + (proximityFactor * (maxWeight - minWeight)));
-      
-      // Width range: 100 to 115 (expanded)
-      const minWidth = 100;
-      const maxWidth = 115;
-      const fontWidth = Math.round(minWidth + (proximityFactor * (maxWidth - minWidth)));
-      
-      // Only update if weight has changed significantly (reduces DOM operations)
-      const currentWeight = item.element.dataset.currentWeight || '300';
-      const currentWidth = item.element.dataset.currentWidth || '100';
-      if (Math.abs(parseInt(currentWeight) - fontWeight) > 2 || Math.abs(parseInt(currentWidth) - fontWidth) > 1) {
-        item.element.style.fontVariationSettings = `'wght' ${fontWeight}, 'wdth' ${fontWidth}, 'slnt' 0`;
-        item.element.dataset.currentWeight = fontWeight.toString();
-        item.element.dataset.currentWidth = fontWidth.toString();
-      }
-    });
+        // For fast scrolling, reduce animation frequency
+        const isScrollingFast = scrollDelta > 20;
 
-    lastScrollY = scrollY;
-    ticking = false;
-  }
+        cachedElements.forEach((item, index) => {
+            const elementCenter = item.offsetTop + item.height / 2;
+            const distanceFromCenter = Math.abs(elementCenter - viewportCenter);
 
-  function handleSectionScroll() {
-    if (!ticking) {
-      // Use different timing for smooth vs fast scrolling
-      const scrollDelta = Math.abs(window.scrollY - lastScrollY);
-      if (scrollDelta > 30) {
-        // Fast scrolling - update immediately
+            // Skip elements that are far from viewport during fast scrolling
+            if (isScrollingFast && distanceFromCenter > windowHeight) {
+                return;
+            }
+
+            // Calculate proximity factor (1 when in center, 0 when at max distance)
+            const proximityFactor = Math.max(
+                0,
+                1 - distanceFromCenter / maxDistance,
+            );
+
+            // Font weight range: 300 (light) to 600 (semibold)
+            const minWeight = 300;
+            const maxWeight = 600;
+            const fontWeight = Math.round(
+                minWeight + proximityFactor * (maxWeight - minWeight),
+            );
+
+            // Width range: 100 to 115 (expanded)
+            const minWidth = 100;
+            const maxWidth = 115;
+            const fontWidth = Math.round(
+                minWidth + proximityFactor * (maxWidth - minWidth),
+            );
+
+            // Only update if weight has changed significantly (reduces DOM operations)
+            const currentWeight = item.element.dataset.currentWeight || "300";
+            const currentWidth = item.element.dataset.currentWidth || "100";
+            if (
+                Math.abs(parseInt(currentWeight) - fontWeight) > 2 ||
+                Math.abs(parseInt(currentWidth) - fontWidth) > 1
+            ) {
+                item.element.style.fontVariationSettings = `'wght' ${fontWeight}, 'wdth' ${fontWidth}, 'slnt' 0`;
+                item.element.dataset.currentWeight = fontWeight.toString();
+                item.element.dataset.currentWidth = fontWidth.toString();
+            }
+        });
+
+        lastScrollY = scrollY;
+        ticking = false;
+    }
+
+    function handleSectionScroll() {
+        if (!ticking) {
+            // Use different timing for smooth vs fast scrolling
+            const scrollDelta = Math.abs(window.scrollY - lastScrollY);
+            if (scrollDelta > 30) {
+                // Fast scrolling - update immediately
+                updateSectionHeadings();
+            } else {
+                // Normal scrolling - use RAF for smoothness
+                requestAnimationFrame(updateSectionHeadings);
+                ticking = true;
+            }
+        }
+    }
+
+    // Debounced resize handler to recache elements
+    let resizeTimeout: ReturnType<typeof setTimeout>;
+    function handleResize() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            cacheElements();
+            updateSectionHeadings();
+        }, 150);
+    }
+
+    // Initialize
+    function initialize() {
+        cacheElements();
         updateSectionHeadings();
-      } else {
-        // Normal scrolling - use RAF for smoothness
-        requestAnimationFrame(updateSectionHeadings);
-        ticking = true;
-      }
+
+        // Listen for scroll events with passive flag for better performance
+        window.addEventListener("scroll", handleSectionScroll, {
+            passive: true,
+        });
+        window.addEventListener("resize", handleResize, { passive: true });
     }
-  }
 
-  // Debounced resize handler to recache elements
-  let resizeTimeout: ReturnType<typeof setTimeout>;
-  function handleResize() {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      cacheElements();
-      updateSectionHeadings();
-    }, 150);
-  }
-
-  // Initialize
-  function initialize() {
-    cacheElements();
-    updateSectionHeadings();
-    
-    // Listen for scroll events with passive flag for better performance
-    window.addEventListener('scroll', handleSectionScroll, { passive: true });
-    window.addEventListener('resize', handleResize, { passive: true });
-  }
-
-  // Setup on DOM ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initialize);
-  } else {
-    initialize();
-  }
-
-  // Re-initialize after page transitions
-  document.addEventListener('astro:page-load', () => {
-    setTimeout(() => {
-      initialize();
-    }, 100);
-  });
-
-  // Email protection - obfuscation to prevent crawlers
-  function setupEmailProtection() {
-    const emailLink = document.getElementById('email-link');
-    
-    if (emailLink) {
-      // Split and reverse parts of the email for basic obfuscation
-      const user = 'hcaer'; // 'reach' reversed
-      const domain = 'ved.eyrw'; // 'wrye.dev' reversed
-      const actualEmail = user.split('').reverse().join('') + '@' + domain.split('').reverse().join('');
-      
-      // Set up the email link on click
-      emailLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        window.location.href = 'mailto:' + actualEmail;
-      });
+    // Setup on DOM ready
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initialize);
+    } else {
+        initialize();
     }
-  }
 
-  // Initialize email protection
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', setupEmailProtection);
-  } else {
-    setupEmailProtection();
-  }
+    // Re-initialize after page transitions
+    document.addEventListener("astro:page-load", () => {
+        setTimeout(() => {
+            initialize();
+        }, 100);
+    });
 
-  // Re-initialize email protection after page transitions
-  document.addEventListener('astro:page-load', () => {
-    setTimeout(setupEmailProtection, 100);
-  });
+    // Email protection - obfuscation to prevent crawlers
+    function setupEmailProtection() {
+        const emailLink = document.getElementById("email-link");
+
+        if (emailLink) {
+            // Split and reverse parts of the email for basic obfuscation
+            const user = "hcaer"; // 'reach' reversed
+            const domain = "ved.eyrw"; // 'wrye.dev' reversed
+            const actualEmail =
+                user.split("").reverse().join("") +
+                "@" +
+                domain.split("").reverse().join("");
+
+            // Set up the email link on click
+            emailLink.addEventListener("click", function (e) {
+                e.preventDefault();
+                window.location.href = "mailto:" + actualEmail;
+            });
+        }
+    }
+
+    // Initialize email protection
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", setupEmailProtection);
+    } else {
+        setupEmailProtection();
+    }
+
+    // Re-initialize email protection after page transitions
+    document.addEventListener("astro:page-load", () => {
+        setTimeout(setupEmailProtection, 100);
+    });
 </script>
 
 <style>
-  @reference "tailwindcss";
+    @reference "tailwindcss";
 
-  .content-section {
-    @apply border-l-2 border-slate-200 pl-6 md:pl-8;
-  }
+    .content-section {
+        @apply border-l-2 border-slate-200 pl-6 md:pl-8;
+    }
 
-  .section-heading {
-    @apply text-2xl md:text-3xl lg:text-4xl text-slate-900 mb-4 md:mb-6 tracking-wide;
-    font-variation-settings: 'wght' 300, 'wdth' 100;
-    transition: font-variation-settings 0.1s cubic-bezier(0.4, 0, 0.2, 1);
-  }
+    .section-heading {
+        @apply text-2xl md:text-3xl lg:text-4xl text-slate-900 mb-4 md:mb-6 tracking-wide;
+        font-variation-settings:
+            "wght" 300,
+            "wdth" 100;
+        transition: font-variation-settings 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 </style>
-
