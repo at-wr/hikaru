@@ -30,10 +30,16 @@ export interface BlogPost {
   title: string;
   slug: string;
   description: string;
-  date: string;
+  /**
+   * Publication date for the post. Matches the `published` field
+   * defined in the content collection schema and is stored as a
+   * JavaScript Date instance by Astro.
+   */
+  published: Date;
+  category: string;
   tags: string[];
   featured?: boolean;
-  published?: boolean;
+  draft?: boolean;
   readingTime?: number;
   image?: string;
 }
