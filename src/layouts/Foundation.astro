@@ -36,6 +36,8 @@ const pageDescription = description || 'Place where I write, record, and share m
 		<meta name="twitter:site" content="@Wr_Offi" />
 		<meta name="twitter:creator" content="@Wr_Offi" />
 
+		<link rel="canonical" href={Astro.url.href} />
+
 		<!-- Dynamic Open Graph Images based on page -->
 		{(() => {
 			const path = Astro.url.pathname;

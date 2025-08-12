@@ -69,8 +69,7 @@ const recentPosts = await getCollection("posts", ({ data }) => {
                 >
                     <a
                         href="/archive"
-                        class="hover:text-slate-600 transition-colors"
-                        style="text-decoration: none;"
+                        class="hover:text-slate-600 transition-colors no-underline inline-block"
                     >
                         Recent Posts
                     </a>
@@ -192,7 +191,7 @@ const recentPosts = await getCollection("posts", ({ data }) => {
                         <a
                             href="https://creativecommons.org/licenses/by-sa/4.0/"
                             target="_blank"
-                            class="text-slate-700 underline hover:text-slate-900 transition-colors"
+                        class="text-slate-700 underline hover:text-slate-900 transition-colors"
                         >
                             CC BY-SA 4.0
                         </a>
@@ -382,5 +381,11 @@ const recentPosts = await getCollection("posts", ({ data }) => {
             "wght" 300,
             "wdth" 100;
         transition: font-variation-settings 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Make focus underline thinner on post titles/descriptions in homepage Recent Posts (override global) */
+    #blog :global(.post-item a:focus-visible) {
+        text-decoration-thickness: 1.5px !important;
+        text-underline-offset: 3px !important;
     }
 </style>

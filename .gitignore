@@ -24,4 +24,5 @@ pnpm-debug.log*
 .idea/
 
 # extras
+agentdocs/
 CLAUDE.md

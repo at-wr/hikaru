@@ -24,7 +24,10 @@
   }
 }
 
-/* Base typography with Tailwind classes */
+/* Base typography with Tailwind classes
+   Font strategy: Prefer SF Pro on Apple platforms via -apple-system.
+   Otherwise, fall back to Inter provided by Astro Fonts (css var).
+*/
 @layer base {
   html {
     font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
@@ -36,6 +39,7 @@
     scroll-behavior: smooth;
   }
 
+  /* On Apple platforms, prefer SF Pro */
   @supports (font-family: -apple-system) {
     html {
       font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
@@ -131,4 +135,39 @@
     .font-black {
         font-variation-settings: 'wght' 900;
     }
+}
+
+/* Reusable focus styles for accessibility */
+@layer utilities {
+  /* Outline for button-like or block elements */
+  .focus-ring { outline: none; }
+  .focus-ring:focus-visible {
+    outline: 2px solid #64748b; /* slate-500 */
+    outline-offset: 3px;
+  }
+}
+
+/* Global anchor focus styling for visibility across content */
+@layer base {
+  a:focus-visible {
+    outline: none;
+    text-decoration: underline;
+    text-decoration-color: #334155; /* slate-700 */
+    text-decoration-thickness: 3px;
+    text-underline-offset: 4px;
+  }
+  /* Keep button-like anchors using outline style only */
+  a.focus-ring:focus-visible {
+    text-decoration: none;
+  }
+}
+
+/* Ensure links explicitly set to no-underline still show focus styling */
+@layer utilities {
+  a.no-underline:focus-visible {
+    text-decoration: underline !important;
+    text-decoration-color: #334155 !important; /* slate-700 */
+    text-decoration-thickness: 3px !important;
+    text-underline-offset: 4px !important;
+  }
 }

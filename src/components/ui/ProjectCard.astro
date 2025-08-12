@@ -12,7 +12,7 @@ const { title, url, description, tags, external = true } = Astro.props;
 
 <a 
   href={url} 
-  class="project-card group"
+  class="project-card group focus-ring"
   target={external ? "_blank" : undefined}
   rel={external ? "noopener noreferrer" : undefined}
 >
@@ -25,6 +25,7 @@ const { title, url, description, tags, external = true } = Astro.props;
       viewBox="0 0 24 24" 
       fill="none" 
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
     >
       <path 
         d="M7 17L17 7M17 7H7M17 7V17" 

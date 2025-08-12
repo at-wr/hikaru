@@ -1,0 +1,21 @@
+---
+import Foundation from "../layouts/Foundation.astro";
+import Header from "../components/Header.astro";
+---
+
+<Foundation title="Page Not Found" description="The page you’re looking for doesn’t exist.">
+  <Fragment slot="header">
+    <Header />
+  </Fragment>
+
+  <main class="px-8 md:px-16 lg:px-24 py-24 min-h-[70vh] flex items-center justify-center">
+    <div class="max-w-3xl mx-auto text-center space-y-6">
+      <h1 class="text-5xl md:text-6xl font-light text-slate-900">404</h1>
+      <p class="text-slate-600 text-lg">Sorry, we couldn’t find that page.</p>
+      <a href="/" class="inline-flex items-center gap-2 px-4 py-3 border border-slate-200 rounded-lg bg-white text-slate-700 font-mono text-sm hover:bg-slate-50 hover:border-slate-300 hover:text-slate-900 transition-all duration-300 ease-out focus-ring">
+        <span>Go back home</span>
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </main>
+</Foundation>

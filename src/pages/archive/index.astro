@@ -77,7 +77,7 @@ const categories = [...new Set(sortedPosts.map(post => post.data.category))];
   @reference "tailwindcss";
   
   .category-link {
-    @apply text-slate-600 hover:text-slate-900 transition-colors underline decoration-slate-300 hover:decoration-slate-600;
+    @apply inline-block text-slate-600 hover:text-slate-900 transition-colors underline decoration-slate-300 hover:decoration-slate-600;
   }
   
   .category-link.active {
