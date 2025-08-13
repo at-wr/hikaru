@@ -2,21 +2,10 @@
 import Foundation from "../layouts/Foundation.astro";
 import Header from "../components/Header.astro";
 import Main from "../components/Main.astro";
-import { getCollection } from 'astro:content';
+import { heroContent, contactContent } from "../data/content";
 
-// Get recent blog posts for dynamic description
-const recentPosts = await getCollection('posts', ({ data }) => {
-  return !data.draft;
-}).then(posts => 
-  posts
-    .sort((a, b) => new Date(b.data.published).getTime() - new Date(a.data.published).getTime())
-    .slice(0, 3)
-);
-
-// Generate dynamic description from recent posts
-const dynamicDescription = recentPosts.length > 0 
-  ? `Architecting human-centered digital experiences through code. Place where I write, record, and share my thoughts.`
-  : undefined; // Falls back to Foundation's default
+// Home meta description sourced from site content
+const dynamicDescription = `${heroContent.tagline}. ${contactContent.description}`;
 ---
 
 <Foundation description={dynamicDescription}>

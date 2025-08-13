@@ -37,7 +37,7 @@ const recentPosts = await getCollection("posts", ({ data }) => {
 
 <div class="min-h-screen bg-white">
     <!-- Hero Section -->
-    <HeroSection subtitle={heroContent.subtitle} />
+    <HeroSection subtitle={heroContent.subtitle} tagline={heroContent.tagline} />
 
     <!-- Main Content -->
     <main
@@ -237,7 +237,7 @@ const recentPosts = await getCollection("posts", ({ data }) => {
         // For fast scrolling, reduce animation frequency
         const isScrollingFast = scrollDelta > 20;
 
-        cachedElements.forEach((item, index) => {
+        cachedElements.forEach((item) => {
             const elementCenter = item.offsetTop + item.height / 2;
             const distanceFromCenter = Math.abs(elementCenter - viewportCenter);
 
