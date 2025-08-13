@@ -28,7 +28,7 @@ const categories = [...new Set(sortedPosts.map(post => post.data.category))];
 
   <div class="min-h-screen bg-white">
     <!-- Main content -->
-    <main class="px-8 md:px-16 lg:px-24 py-16" style="view-transition-name: main-content;">
+    <main id="main-content" class="px-8 md:px-16 lg:px-24 py-16" style="view-transition-name: main-content;">
       <div class="max-w-4xl mx-auto">
         <!-- Hero section -->
         <section class="mb-16">
@@ -42,7 +42,7 @@ const categories = [...new Set(sortedPosts.map(post => post.data.category))];
           <!-- Category links -->
           <div class="flex flex-wrap gap-3 text-sm font-mono">
             <span class="text-slate-500 font-mono">Filter:</span>
-            <a href="/archive" class="category-link active">All</a>
+            <a href="/archive" class="category-link active" aria-current="page">All</a>
             {categories.map(category => (
               <a 
                 href={`/archive/category/${category.toLowerCase().replace(/\s+/g, '-')}`}
