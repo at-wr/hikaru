@@ -50,6 +50,22 @@ const publishedDate = new Date(published).toLocaleDateString('en-US', {
     <Header customTitle="Alan's Blog" />
   </Fragment>
   
+  <!-- OpenGraph/Twitter article metadata -->
+  <Fragment slot="head">
+    <meta property="og:type" content="article" />
+    <meta property="article:published_time" content={published.toISOString()} />
+    {tags.length > 0 && (
+      <meta property="article:tag" content={tags.join(', ')} />
+    )}
+    {category && (
+      <meta property="article:section" content={category} />
+    )}
+    {language && (
+      <meta property="og:locale" content={language.replace('-', '_')} />
+    )}
+    <meta name="twitter:card" content="summary_large_image" />
+  </Fragment>
+  
   <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
   <div class="min-h-screen bg-white">
     <!-- Article content -->
