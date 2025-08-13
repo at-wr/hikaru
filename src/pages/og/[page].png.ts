@@ -45,6 +45,15 @@ const ogImage: APIRoute = async ({ params }) => {
     notoSansSCRegular = interRegular;
   }
 
+  const siteHost = (() => {
+    try {
+      const url = new URL((import.meta as any).env?.SITE || 'https://wrye.dev');
+      return url.hostname;
+    } catch {
+      return 'wrye.dev';
+    }
+  })();
+
   const svg = await satori(
     {
       type: 'div',
@@ -104,7 +113,7 @@ const ogImage: APIRoute = async ({ params }) => {
                 fontSize: '24px',
                 color: '#59606A',
               },
-              children: 'wrye.dev',
+              children: siteHost,
             },
           },
         ],
@@ -136,11 +145,9 @@ const ogImage: APIRoute = async ({ params }) => {
     }
   );
 
-  const png = await sharp(Buffer.from(svg))
-    .png()
-    .toBuffer();
+  const png = await sharp(Buffer.from(svg)).png().toBuffer();
 
-  return new Response(png, {
+  return new Response(new Uint8Array(png), {
     headers: {
       'Content-Type': 'image/png',
       'Cache-Control': 'public, max-age=31536000, immutable',

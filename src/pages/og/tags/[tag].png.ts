@@ -18,6 +18,14 @@ export async function getStaticPaths() {
 
 const ogImage: APIRoute = async ({ props }) => {
   const { tag } = props;
+  const siteHost = (() => {
+    try {
+      const url = new URL((import.meta as any).env?.SITE || 'https://wrye.dev');
+      return url.hostname;
+    } catch {
+      return 'wrye.dev';
+    }
+  })();
   
   // Load fonts
   const interRegular = readFileSync(
@@ -92,7 +100,7 @@ const ogImage: APIRoute = async ({ props }) => {
                 fontSize: '24px',
                 color: '#59606A',
               },
-              children: 'wrye.dev',
+              children: siteHost,
             },
           },
         ],
@@ -124,11 +132,9 @@ const ogImage: APIRoute = async ({ props }) => {
     }
   );
 
-  const png = await sharp(Buffer.from(svg))
-    .png()
-    .toBuffer();
+  const png = await sharp(Buffer.from(svg)).png().toBuffer();
 
-  return new Response(png, {
+  return new Response(new Uint8Array(png), {
     headers: {
       'Content-Type': 'image/png',
       'Cache-Control': 'public, max-age=31536000, immutable',
