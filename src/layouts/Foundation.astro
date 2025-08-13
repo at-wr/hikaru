@@ -3,6 +3,7 @@ import { Font } from 'astro:assets';
 import '../styles/global.css'
 import Header from '../components/Header.astro';
 import { ClientRouter } from 'astro:transitions';
+import { getOgImage } from '../utils/metadata';
 
 interface Props {
 	title?: string;
@@ -14,6 +15,7 @@ interface Props {
 const { title, description, class: className, language = 'en' } = Astro.props;
 const pageTitle = title ? `${title} - Alan Ye` : 'Alan Ye (@at-wr)';
 const pageDescription = description || 'Place where I write, record, and share my thoughts.';
+const ogImage = getOgImage(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
@@ -37,101 +39,15 @@ const pageDescription = description || 'Place where I write, record, and share m
 		<meta name="twitter:creator" content="@Wr_Offi" />
 
 		<link rel="canonical" href={Astro.url.href} />
+                <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss.xml" />
 
-		<!-- Dynamic Open Graph Images based on page -->
-		{(() => {
-			const path = Astro.url.pathname;
-			
-			// Simple routing detection
-			if (path.startsWith('/archive/')) {
-				// Archive section
-				const segments = path.split('/').filter(Boolean);
-				
-				// Posts: /archive/post-slug
-				if (segments.length === 2 && segments[0] === 'archive' && segments[1] !== 'tag' && segments[1] !== 'category') {
-					const slug = segments[1];
-					return (
-						<>
-							<meta property="og:image" content={`${Astro.site}og/posts/${slug}.png`} />
-							<meta property="og:image:width" content="1200" />
-							<meta property="og:image:height" content="630" />
-							<meta property="og:image:type" content="image/png" />
-							<meta property="og:image:alt" content={pageTitle} />
-
-							<meta name="twitter:image" content={`${Astro.site}og/posts/${slug}.png`} />
-							<meta name="twitter:image:alt" content={pageTitle} />
-						</>
-					);
-				}
-				
-				// Tags: /archive/tag/tag-name
-				if (segments.length === 3 && segments[0] === 'archive' && segments[1] === 'tag') {
-					const tag = segments[2];
-					return (
-						<>
-							<meta property="og:image" content={`${Astro.site}og/tags/${tag}.png`} />
-							<meta property="og:image:width" content="1200" />
-							<meta property="og:image:height" content="630" />
-							<meta property="og:image:type" content="image/png" />
-							<meta property="og:image:alt" content={pageTitle} />
-
-							<meta name="twitter:image" content={`${Astro.site}og/tags/${tag}.png`} />
-							<meta name="twitter:image:alt" content={pageTitle} />
-						</>
-					);
-				}
-				
-				// Categories: /archive/category/category-name
-				if (segments.length === 3 && segments[0] === 'archive' && segments[1] === 'category') {
-					const category = segments[2];
-					return (
-						<>
-							<meta property="og:image" content={`${Astro.site}og/categories/${category}.png`} />
-							<meta property="og:image:width" content="1200" />
-							<meta property="og:image:height" content="630" />
-							<meta property="og:image:type" content="image/png" />
-							<meta property="og:image:alt" content={pageTitle} />
-
-							<meta name="twitter:image" content={`${Astro.site}og/categories/${category}.png`} />
-							<meta name="twitter:image:alt" content={pageTitle} />
-						</>
-					);
-				}
-			}
-			
-			// Handle root archive page
-			if (path === '/archive') {
-				return (
-					<>
-						<meta property="og:image" content={`${Astro.site}og/archive.png`} />
-						<meta property="og:image:width" content="1200" />
-						<meta property="og:image:height" content="630" />
-						<meta property="og:image:type" content="image/png" />
-						<meta property="og:image:alt" content={pageTitle} />
-
-						<meta name="twitter:image" content={`${Astro.site}og/archive.png`} />
-						<meta name="twitter:image:alt" content={pageTitle} />
-					</>
-				);
-			}
-			
-			// Handle other specific pages
-			let ogImage = 'home';
-			if (path === '/friends') ogImage = 'friends';
-			
-			return (
-				<>
-					<meta property="og:image" content={`${Astro.site}og/${ogImage}.png`} />
-					<meta property="og:image:width" content="1200" />
-					<meta property="og:image:height" content="630" />
-					<meta property="og:image:type" content="image/png" />
-					<meta property="og:image:alt" content={pageTitle} />
-
-					<meta name="twitter:image" content={`${Astro.site}og/${ogImage}.png`} />
-					<meta name="twitter:image:alt" content={pageTitle} />
-				</>
-			);
-		})()}
+                <meta property="og:image" content={ogImage} />
+                <meta property="og:image:width" content="1200" />
+                <meta property="og:image:height" content="630" />
+                <meta property="og:image:type" content="image/png" />
+                <meta property="og:image:alt" content={pageTitle} />
+                <meta name="twitter:image" content={ogImage} />
+                <meta name="twitter:image:alt" content={pageTitle} />
 
 		<link rel="icon" type="image/png" href="/favicon.png" />
 		<meta name="generator" content={Astro.generator} />
