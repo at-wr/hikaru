@@ -21,6 +21,9 @@ import {
 // Import blog posts
 import { getCollection } from "astro:content";
 
+import initSectionHeadings from "../scripts/sectionHeading";
+import setupEmailProtection from "../scripts/emailProtection";
+
 // Get recent blog posts (latest 3)
 const recentPosts = await getCollection("posts", ({ data }) => {
     return !data.draft;
@@ -202,10 +205,7 @@ const recentPosts = await getCollection("posts", ({ data }) => {
     </main>
 </div>
 
-<script type="module">
-    import initSectionHeadings from "../scripts/sectionHeading";
-    import setupEmailProtection from "../scripts/emailProtection";
-
+<script>
     initSectionHeadings();
     setupEmailProtection();
 </script>

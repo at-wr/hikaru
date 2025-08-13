@@ -1,4 +1,6 @@
 ---
+import initHeader from "../scripts/header";
+
 interface Props {
   customTitle?: string;
 }
@@ -142,7 +144,6 @@ const displayTitle = customTitle || "Alan Ye";
     </div>
 </div>
 
-<script type="module">
-    import initHeader from "../scripts/header";
+<script>
     initHeader();
 </script>
