@@ -30,18 +30,18 @@ const { title, company, period, description } = Astro.props;
   }
 
   .experience-title {
-    @apply text-xl font-medium text-slate-800;
+    @apply text-xl font-medium text-slate-800 dark:text-slate-200;
   }
 
   .experience-period {
-    @apply text-sm text-slate-500 font-mono mt-1 md:mt-0;
+    @apply text-sm text-slate-500 dark:text-slate-400 font-mono mt-1 md:mt-0;
   }
 
   .experience-company {
-    @apply text-slate-600 font-medium;
+    @apply text-slate-600 dark:text-slate-300 font-medium;
   }
 
   .experience-description {
-    @apply text-slate-600 leading-relaxed;
+    @apply text-slate-600 dark:text-slate-300 leading-relaxed;
   }
 </style>

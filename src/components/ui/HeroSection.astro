@@ -14,7 +14,7 @@ const words = tagline.split(/\s+/).filter(Boolean);
 
 <section class="min-h-screen flex flex-col justify-center px-8 md:px-16 lg:px-24 pt-20 md:pt-16" style="view-transition-name: hero-section;">
   <div class="max-w-4xl">
-    <p class="hero-tagline text-lg md:text-xl lg:text-2xl text-slate-700 leading-relaxed font-light mb-3">
+    <p class="hero-tagline text-lg md:text-xl lg:text-2xl text-slate-700 dark:text-slate-200 leading-relaxed font-light mb-3">
       {words.map((w, i) => (
         <Fragment>
           <span style={`animation-delay: ${i * 0.15}s`}>{w}</span>{i < words.length - 1 ? ' ' : null}
@@ -22,7 +22,7 @@ const words = tagline.split(/\s+/).filter(Boolean);
       ))}
     </p>
     
-    <div class="text-sm text-light text-slate-500">
+    <div class="text-sm text-light text-slate-500 dark:text-slate-400">
       {subtitle}
     </div>
     
@@ -34,7 +34,7 @@ const words = tagline.split(/\s+/).filter(Boolean);
         tabindex="-1"
         role="presentation"
       >
-        <div class="text-slate-400 tracking-wider animate-bounce">↓</div>
+        <div class="text-slate-400 dark:text-slate-300 tracking-wider animate-bounce">↓</div>
       </a>
     </div>
   </div>
@@ -82,5 +82,4 @@ const words = tagline.split(/\s+/).filter(Boolean);
     }
   }
 
-  /* Per-word animation delays are applied inline for flexibility */
 </style>

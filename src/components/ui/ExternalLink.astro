@@ -9,7 +9,6 @@ interface Props {
 
 const { href, external = true, class: className, id, rel } = Astro.props;
 
-// Build rel attribute based on props
 const relAttribute = (() => {
   const parts: string[] = [];
   
@@ -57,9 +56,9 @@ const relAttribute = (() => {
   
   .external-link {
     @apply inline-flex items-center;
-    @apply px-4 py-3 border border-slate-200 rounded-lg;
-    @apply bg-white text-slate-700 font-mono text-sm;
-    @apply hover:bg-slate-50 hover:border-slate-300 hover:text-slate-900;
+    @apply px-4 py-3 border border-slate-200 dark:border-slate-700 rounded-lg;
+    @apply bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-mono text-sm;
+    @apply hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-slate-300 dark:hover:border-slate-600 hover:text-slate-900 dark:hover:text-slate-100;
     @apply hover:-translate-y-0.5 hover:shadow-md;
     @apply active:translate-y-0 active:shadow-sm;
     @apply transition-all duration-300 ease-out;
@@ -72,16 +71,15 @@ const relAttribute = (() => {
   }
 
   .external-link-icon {
-    @apply text-slate-400 w-4 h-4;
+    @apply text-slate-400 dark:text-slate-300 w-4 h-4;
     @apply transition-all duration-300 ease-out;
     @apply opacity-0 scale-75 w-0;
     @apply group-hover:opacity-100 group-hover:scale-100 group-hover:w-4;
-    @apply group-hover:text-slate-600 group-hover:ml-1;
+    @apply group-hover:text-slate-600 dark:group-hover:text-slate-100 group-hover:ml-1;
     flex-shrink: 0;
     overflow: hidden;
   }
 
-  /* Shimmer effect */
   .external-link::before {
     content: '';
     @apply absolute inset-0 -translate-x-full;
