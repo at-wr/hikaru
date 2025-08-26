@@ -2,6 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import type { CollectionEntry } from 'astro:content';
 import Header from '../components/Header.astro';
+import FooterLicense from '../components/ui/FooterLicense.astro';
 
 interface Props {
   post: CollectionEntry<'posts'>;
@@ -10,7 +11,6 @@ interface Props {
 const { post } = Astro.props;
 const { title, published, category, tags, description, language = 'en' } = post.data;
 
-// Generate JSON-LD structured data
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
@@ -37,7 +37,6 @@ const jsonLd = {
   "image": `${Astro.site?.href || "https://wrye.dev/"}og/posts/${post.slug}.png`
 };
 
-// Format date
 const publishedDate = new Date(published).toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'long',
@@ -50,7 +49,7 @@ const publishedDate = new Date(published).toLocaleDateString('en-US', {
     <Header customTitle="Alan's Blog" />
   </Fragment>
   
-  <!-- OpenGraph/Twitter article metadata -->
+  
   <Fragment slot="head">
     <meta property="og:type" content="article" />
     <meta property="article:published_time" content={published.toISOString()} />
@@ -67,29 +66,29 @@ const publishedDate = new Date(published).toLocaleDateString('en-US', {
   </Fragment>
   
   <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
-  <div class="min-h-screen bg-white">
-    <!-- Article content -->
+  <div class="min-h-screen bg-white dark:bg-slate-900">
+    
     <article class="px-8 md:px-16 lg:px-24 py-16" style="view-transition-name: blog-content;">
       <div class="max-w-4xl mx-auto">
-        <!-- Article header -->
+        
         <header class="mb-12">
           <div class="mb-6">
             <a 
               href={`/archive/category/${category.toLowerCase().replace(/\s+/g, '-')}`}
-              class="inline-block px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm font-medium mb-4 hover:bg-slate-200 transition-colors focus-ring"
+              class="inline-block px-3 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full text-sm font-medium mb-4 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors focus-ring"
             >
               {category}
             </a>
-            <h1 class="text-4xl md:text-5xl font-light text-slate-900 mb-4 leading-tight">
+            <h1 class="text-4xl md:text-5xl font-light text-slate-900 dark:text-slate-100 mb-4 leading-tight">
               {title}
             </h1>
-            <p class="text-lg text-slate-600 leading-relaxed mb-6">
+            <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
               {description}
             </p>
           </div>
           
-          <!-- Metadata -->
-          <div class="flex flex-wrap items-center gap-4 text-sm text-slate-500 font-mono">
+          
+          <div class="flex flex-wrap items-center gap-4 text-sm text-slate-500 dark:text-slate-400 font-mono">
             <time datetime={published.toISOString()}>
               {publishedDate}
             </time>
@@ -106,30 +105,26 @@ const publishedDate = new Date(published).toLocaleDateString('en-US', {
           </div>
         </header>
 
-        <!-- Article content -->
+        
         <div class="prose prose-lg max-w-none min-w-0">
           <div class="blog-content">
             <slot />
           </div>
         </div>
 
-        <!-- Blog Post Footer -->
-        <footer class="mt-16 pt-8 border-t border-slate-200 space-y-6">
-          <!-- Navigation & Copyright -->
+        
+        <footer class="mt-16 pt-8 border-t border-slate-200 dark:border-slate-700 space-y-6">
+          
           <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
             <a 
               href="/archive" 
-              class="inline-flex items-center text-slate-600 hover:text-slate-900 transition-colors text-sm font-mono"
+              class="inline-flex items-center text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors text-sm font-mono"
             >
               ← Back to Archive
             </a>
-            <div class="text-sm text-slate-500 font-mono text-center sm:text-right">
+            <div class="text-sm text-slate-500 dark:text-slate-400 font-mono text-center sm:text-right">
               <span class="whitespace-nowrap">© {new Date().getFullYear()} Alan Ye.</span>
-              <span class="whitespace-nowrap"> Text licensed under 
-                <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" class="text-slate-700 underline hover:text-slate-900 transition-colors">
-                  CC BY-SA 4.0
-                </a>
-              </span>
+              <FooterLicense class="ml-2" />
             </div>
           </div>
         </footer>
@@ -142,29 +137,29 @@ const publishedDate = new Date(published).toLocaleDateString('en-US', {
   @reference "tailwindcss";
   
   .blog-content {
-    @apply text-slate-700 leading-relaxed;
+    @apply text-slate-700 dark:text-slate-300 leading-relaxed;
     word-wrap: break-word;
     overflow-wrap: break-word;
     hyphens: auto;
   }
 
   .blog-content :global(h1) {
-    @apply text-3xl font-light text-slate-900 mb-6 mt-12 first:mt-0;
+    @apply text-3xl font-light text-slate-900 dark:text-slate-100 mb-6 mt-12 first:mt-0;
     font-variation-settings: 'wght' 300;
   }
 
   .blog-content :global(h2) {
-    @apply text-2xl font-light text-slate-900 mb-4 mt-10;
+    @apply text-2xl font-light text-slate-900 dark:text-slate-100 mb-4 mt-10;
     font-variation-settings: 'wght' 300;
   }
 
   .blog-content :global(h3) {
-    @apply text-xl font-medium text-slate-800 mb-3 mt-8;
+    @apply text-xl font-medium text-slate-800 dark:text-slate-200 mb-3 mt-8;
     font-variation-settings: 'wght' 500;
   }
 
   .blog-content :global(h4) {
-    @apply text-lg font-medium text-slate-800 mb-2 mt-6;
+    @apply text-lg font-medium text-slate-800 dark:text-slate-200 mb-2 mt-6;
     font-variation-settings: 'wght' 500;
   }
 
@@ -194,20 +189,19 @@ const publishedDate = new Date(published).toLocaleDateString('en-US', {
   }
 
   .blog-content :global(blockquote) {
-    @apply border-l-4 border-slate-300 pl-6 py-2 my-6 italic text-slate-600;
+    @apply border-l-4 border-slate-300 dark:border-slate-700 pl-6 py-2 my-6 italic text-slate-600 dark:text-slate-400;
     word-break: break-word;
     overflow-wrap: break-word;
   }
 
-  .blog-content :global(code) {
-    @apply bg-slate-100 text-slate-800 px-2 py-1 rounded text-sm font-mono;
+  .blog-content :global(:not(pre) > code) {
+    @apply bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-100 px-2 py-1 rounded text-sm font-mono;
     word-break: break-word;
     overflow-wrap: break-word;
   }
 
   .blog-content :global(pre) {
     @apply p-6 rounded-lg overflow-x-auto mb-6 text-sm;
-    /* Let Shiki handle colors, only provide structure */
     overflow-x: auto;
     white-space: pre-wrap;
     word-break: break-word;
@@ -215,17 +209,15 @@ const publishedDate = new Date(published).toLocaleDateString('en-US', {
 
   .blog-content :global(pre code) {
     @apply p-0;
-    /* Let Shiki handle all syntax highlighting colors */
     background: transparent;
   }
 
-  /* Ensure fallback for plain text blocks without Shiki styling */
   .blog-content :global(pre:not([class*="astro-code"])) {
     @apply bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100;
   }
 
   .blog-content :global(a) {
-    @apply text-slate-900 underline hover:text-slate-600 transition-colors;
+    @apply text-slate-900 dark:text-slate-100 underline hover:text-slate-600 dark:hover:text-slate-300 transition-colors;
     word-break: break-word;
     overflow-wrap: break-word;
   }
@@ -235,26 +227,26 @@ const publishedDate = new Date(published).toLocaleDateString('en-US', {
   }
 
   .blog-content :global(table) {
-    @apply w-full border-collapse border border-slate-300 mb-6;
+    @apply w-full border-collapse border border-slate-300 dark:border-slate-700 mb-6;
     word-break: break-word;
     overflow-wrap: break-word;
   }
 
   .blog-content :global(th), 
   .blog-content :global(td) {
-    @apply border border-slate-300 px-4 py-2 text-left;
+    @apply border border-slate-300 dark:border-slate-700 px-4 py-2 text-left;
   }
 
   .blog-content :global(th) {
-    @apply bg-slate-50 font-medium;
+    @apply bg-slate-50 dark:bg-slate-800 font-medium;
   }
 
   .blog-content :global(hr) {
-    @apply border-t border-slate-200 my-12;
+    @apply border-t border-slate-200 dark:border-slate-700 my-12;
   }
 
   .skill-tag {
-    @apply px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs font-mono;
-    @apply hover:bg-slate-200 transition-colors duration-200;
+    @apply px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded text-xs font-mono;
+    @apply hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors duration-200;
   }
 </style>
