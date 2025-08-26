@@ -28,9 +28,11 @@
   - `pnpm preview` to manually verify routes, RSS (`/rss.xml`), and OG images (`/og/[page].png`).
 - Keep changes scoped and test across light/dark preferences if styling is affected.
 
+## Documentation & Research
+- Use the Context7 MCP tool to search up-to-date documentation whenever looking up docs can help clarify APIs, libraries, or best practices.
+
 ## Commit & Pull Request Guidelines
 - Use Conventional Commits (seen in history): `feat:`, `fix:`, `chore:`, `style:`.
 - PRs should include: clear description, linked issues, and screenshots/GIFs for visual changes.
 - Before opening a PR: run `pnpm build` and `pnpm astro check`; ensure `dist/` builds cleanly and no unnecessary assets are added to `public/`.
 - Keep PRs small and focused; update docs when user-facing behavior changes.
-
