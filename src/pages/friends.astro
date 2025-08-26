@@ -9,8 +9,9 @@ import Foundation from '../layouts/Foundation.astro';
 import ContactLink from '../components/ui/ContactLink.astro';
 import Header from '../components/Header.astro';
 import { Image } from 'astro:assets';
+import SiteFooter from '../components/ui/SiteFooter.astro';
 
-const friends = [
+let friends = [
   {
     name: "Cynosura",
     url: "https://cynosura.one",
@@ -48,32 +49,35 @@ const friends = [
     avatar: lakrAvatar
   }
 ]
+for (let i = friends.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [friends[i], friends[j]] = [friends[j], friends[i]];
+}
 const pageTitle = "Friends 友人";
 const pageDescription = "Place where I list the talented people I know.";
 ---
 
 <Foundation title={pageTitle} description={pageDescription}>
   
-  <!-- Custom Header with "Alan's" -->
+  
   <Fragment slot="header">
     <Header customTitle="Alan's" />
   </Fragment>
-  <div class="min-h-screen bg-white">
+  <div class="min-h-screen bg-white dark:bg-slate-900">
     
-    <!-- Hero section -->
+    
     <main id="main-content" class="px-8 md:px-16 lg:px-24 py-16" style="view-transition-name: main-content;">
       <div class="max-w-4xl mx-auto">
         
         <section class="mb-16">
-          <h1 class="text-4xl md:text-5xl font-light text-slate-900 mb-6 leading-tight">
+          <h1 class="text-4xl md:text-5xl font-light text-slate-900 dark:text-slate-100 mb-6 leading-tight">
             Friends
           </h1>
-          <p class="text-lg text-slate-600 leading-relaxed max-w-2xl">
+          <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
             Place where I list the talented people I know. Randomly shuffled.
           </p>
         </section>
-
-        <!-- Friends Grid -->
+        
         <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
           {friends.map((friend) => (
             <a 
@@ -94,7 +98,7 @@ const pageDescription = "Place where I list the talented people I know.";
                 </div>
                 <div class="flex-1">
                   <div class="flex items-start justify-between">
-                    <h3 class="text-lg font-medium text-slate-800 mb-2 group-hover:text-slate-700 transition-colors">
+                    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mb-2 group-hover:text-slate-700 dark:group-hover:text-slate-100 transition-colors">
                       {friend.name}
                     </h3>
                     <svg 
@@ -115,7 +119,7 @@ const pageDescription = "Place where I list the talented people I know.";
                       />
                     </svg>
                   </div>
-                  <p class="text-slate-600 text-xs leading-relaxed">
+                  <p class="text-slate-600 dark:text-slate-300 text-xs leading-relaxed">
                     {friend.description}
                   </p>
                 </div>
@@ -123,46 +127,11 @@ const pageDescription = "Place where I list the talented people I know.";
             </a>
           ))}
         </section>
-        
-        <script is:inline>
-          // Apply random order and adjust DOM order to match focus/tab order
-          (function() {
-            const nodeList = document.querySelectorAll('.friend-card');
-            if (!nodeList || nodeList.length === 0) return;
-
-            const cards = Array.from(nodeList);
-            const parent = cards[0].parentElement;
-            if (!parent) return;
-
-            // Build array of indices and shuffle (Fisher–Yates)
-            const indices = cards.map((_, i) => i);
-            for (let i = indices.length - 1; i > 0; i--) {
-              const j = Math.floor(Math.random() * (i + 1));
-              [indices[i], indices[j]] = [indices[j], indices[i]];
-            }
-
-            // Assign order for visual continuity
-            cards.forEach((card, originalIndex) => {
-              const order = indices[originalIndex];
-              card.style.order = String(order);
-            });
-
-            // Reorder DOM to match visual order so keyboard focus follows
-            const ordered = cards
-              .map((card, originalIndex) => ({ card, order: indices[originalIndex] }))
-              .sort((a, b) => a.order - b.order)
-              .map(({ card }) => card);
-
-            ordered.forEach(card => parent.appendChild(card));
-          })();
-        </script>
-
-        <!-- Add Your Site Section -->
-        <section class="mt-16 pt-12 border-t border-slate-200">
-          <h2 class="text-2xl md:text-3xl font-light text-slate-900 mb-4">
+        <section class="mt-16">
+          <h2 class="text-2xl md:text-3xl font-light text-slate-900 dark:text-slate-100 mb-4">
             Want to connect?
           </h2>
-          <p class="text-lg text-slate-600 leading-relaxed mb-6 max-w-md">
+          <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed mb-6 max-w-md">
             If we've worked together or you think we should connect, reach out and I'll add you to this list.
           </p>
           <ContactLink href="/#contact">
@@ -170,26 +139,20 @@ const pageDescription = "Place where I list the talented people I know.";
           </ContactLink>
         </section>
 
+        <SiteFooter />
+
       </div>
     </main>
+    
   </div>
 </Foundation>
-
-<!-- Footer Disclaimer -->
-<footer class="px-8 md:px-16 lg:px-24 py-8 border-t border-slate-200">
-  <div class="max-w-4xl mx-auto">
-    <p class="text-sm text-slate-500 font-mono">
-       All opinions expressed by individuals are their own.
-    </p>
-  </div>
-</footer>
 
 <style>
   @reference "tailwindcss";
 
   .friend-card {
-    @apply block p-6 bg-white border border-slate-200 rounded-lg shadow-sm;
-    @apply hover:border-slate-300 hover:bg-slate-50 hover:-translate-y-0.5;
+    @apply block p-6 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-sm;
+    @apply hover:border-slate-300 dark:hover:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700 hover:-translate-y-0.5;
     @apply active:translate-y-0 active:shadow-sm;
     @apply transition-all duration-300 ease-out;
     @apply relative overflow-hidden;
@@ -199,15 +162,14 @@ const pageDescription = "Place where I list the talented people I know.";
   }
 
   .arrow-icon {
-    @apply text-slate-400 w-5 h-5;
+    @apply text-slate-400 dark:text-slate-300 w-5 h-5;
     @apply transition-all duration-300 ease-out;
     @apply opacity-0 translate-x-2 -translate-y-1;
     @apply group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0;
-    @apply group-hover:text-slate-600;
+    @apply group-hover:text-slate-600 dark:group-hover:text-slate-200;
     flex-shrink: 0;
   }
 
-  /* Shimmer effect */
   .friend-card::before {
     content: '';
     @apply absolute inset-0 -translate-x-full;

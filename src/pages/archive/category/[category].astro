@@ -3,6 +3,7 @@ import Foundation from '../../../layouts/Foundation.astro';
 import PostListItem from '../../../components/PostListItem.astro';
 import Header from '../../../components/Header.astro';
 import { getCollection } from 'astro:content';
+import SiteFooter from '../../../components/ui/SiteFooter.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts', ({ data }) => !data.draft);
@@ -16,8 +17,7 @@ export async function getStaticPaths() {
 
 const { category, posts } = Astro.props;
 
-// Sort posts by published date (newest first)
-const sortedPosts = posts.sort((a, b) => 
+const sortedPosts = posts.sort((a, b) =>
   new Date(b.data.published).getTime() - new Date(a.data.published).getTime()
 );
 ---
@@ -29,29 +29,28 @@ const sortedPosts = posts.sort((a, b) =>
   <Fragment slot="header">
     <Header customTitle="Alan's Blog" />
   </Fragment>
-  <div class="min-h-screen bg-white">
-    <!-- Main content -->
+  <div class="min-h-screen bg-white dark:bg-slate-900">
     <main id="main-content" class="px-8 md:px-16 lg:px-24 py-16" style="view-transition-name: main-content;">
       <div class="max-w-4xl mx-auto">
-        <!-- Hero section -->
+        
         <section class="mb-16">
           <div class="mb-6">
             <a 
               href="/archive" 
-              class="inline-flex items-center text-slate-600 hover:text-slate-900 transition-colors text-sm mb-4"
+              class="inline-flex items-center text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors text-sm mb-4"
             >
               ← Back to Archive
             </a>
           </div>
-          <h2 class="text-4xl md:text-5xl font-light text-slate-900 mb-6 leading-tight">
+          <h2 class="text-4xl md:text-5xl font-light text-slate-900 dark:text-slate-100 mb-6 leading-tight">
             {category}
           </h2>
-          <p class="text-lg text-slate-600 leading-relaxed max-w-2xl">
+          <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
             {sortedPosts.length} post{sortedPosts.length !== 1 ? 's' : ''} in this category.
           </p>
         </section>
 
-        <!-- Posts grid -->
+        
         <section class="space-y-8">
           {sortedPosts.map(post => (
             <PostListItem
@@ -65,6 +64,8 @@ const sortedPosts = posts.sort((a, b) =>
             />
           ))}
         </section>
+
+        <SiteFooter />
       </div>
     </main>
   </div>

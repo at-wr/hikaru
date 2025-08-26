@@ -1,0 +1,19 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<span class:list={["whitespace-nowrap", className]}>
+  Text licensed under 
+  <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" class="text-slate-700 dark:text-slate-300 underline hover:text-slate-900 dark:hover:text-slate-100 transition-colors">
+    CC BY-SA 4.0
+  </a>
+</span>
+
+<style>
+  @reference "tailwindcss";
+</style>
+

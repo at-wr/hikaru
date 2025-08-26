@@ -6,8 +6,8 @@ import ExperienceItem from "./ui/ExperienceItem.astro";
 import SkillsGroup from "./ui/SkillsGroup.astro";
 import ExternalLink from "./ui/ExternalLink.astro";
 import PostListItem from "./PostListItem.astro";
+import SiteFooter from "./ui/SiteFooter.astro";
 
-// Import data from centralized content file
 import {
     skills,
     experiences,
@@ -18,10 +18,8 @@ import {
     contactContent,
 } from "../data/content";
 
-// Import blog posts
 import { getCollection } from "astro:content";
 
-// Get recent blog posts (latest 3)
 const recentPosts = await getCollection("posts", ({ data }) => {
     return !data.draft;
 }).then((posts) =>
@@ -35,18 +33,17 @@ const recentPosts = await getCollection("posts", ({ data }) => {
 );
 ---
 
-<div class="min-h-screen bg-white">
-    <!-- Hero Section -->
+<div class="min-h-screen bg-white dark:bg-slate-900">
     <HeroSection subtitle={heroContent.subtitle} tagline={heroContent.tagline} />
 
-    <!-- Main Content -->
+    
     <main
         id="main-content"
         class="px-8 md:px-16 lg:px-24 pb-24 content-container"
         style="view-transition-name: main-content;"
     >
         <div class="max-w-4xl mx-auto space-y-16 md:space-y-24">
-            <!-- About Section -->
+            
             <ContentSection title="About" id="about">
                 <div class="space-y-4">
                     {
@@ -59,7 +56,7 @@ const recentPosts = await getCollection("posts", ({ data }) => {
                 </div>
             </ContentSection>
 
-            <!-- Blog Section -->
+            
             <div
                 class="content-section border-l-2 border-slate-200 pl-6 md:pl-8"
                 id="blog"
@@ -87,7 +84,7 @@ const recentPosts = await getCollection("posts", ({ data }) => {
                         ))
                     }
 
-                    <!-- {/* View all posts link */}
+                    
             <div class="pt-4">
               <a
                 href="/archive"
@@ -99,7 +96,7 @@ const recentPosts = await getCollection("posts", ({ data }) => {
                 </div>
             </div>
 
-            <!-- Skills Section -->
+            
             <ContentSection title="Skills" id="skills">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {
@@ -113,21 +110,21 @@ const recentPosts = await getCollection("posts", ({ data }) => {
                 </div>
             </ContentSection>
 
-            <!-- Experience Section -->
+            
             <ContentSection title="Experience" id="experience">
                 <div class="space-y-8">
                     {experiences.map((exp) => <ExperienceItem {...exp} />)}
                 </div>
             </ContentSection>
 
-            <!-- Projects Section -->
+            
             <ContentSection title="Projects" id="projects">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {projects.map((project) => <ProjectCard {...project} />)}
                 </div>
             </ContentSection>
 
-            <!-- Contact Section -->
+            
             <ContentSection title="Contact" id="contact">
                 <div class="space-y-4">
                     <p
@@ -156,7 +153,7 @@ const recentPosts = await getCollection("posts", ({ data }) => {
                 </div>
             </ContentSection>
 
-            <!-- Extras Links Section -->
+            
             <ContentSection title="Extras" id="extras">
                 <div class="space-y-4">
                     <p
@@ -178,32 +175,12 @@ const recentPosts = await getCollection("posts", ({ data }) => {
                 </div>
             </ContentSection>
 
-            <!-- Footer -->
-            <div class="border-t border-slate-200 pt-8 mt-16">
-                <div
-                    class="flex flex-col sm:flex-row justify-between items-center text-sm text-slate-500 font-mono"
-                >
-                    <div class="whitespace-nowrap">
-                        Designed by Alan. All rights reserved.
-                    </div>
-                    <div class="mt-2 sm:mt-0 whitespace-nowrap">
-                        Text licensed under
-                        <a
-                            href="https://creativecommons.org/licenses/by-sa/4.0/"
-                            target="_blank"
-                        class="text-slate-700 underline hover:text-slate-900 transition-colors"
-                        >
-                            CC BY-SA 4.0
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <SiteFooter />
         </div>
     </main>
 </div>
 
 <script>
-    // Section heading font weight animation based on scroll position
     let ticking = false;
     let cachedElements: {
         element: HTMLElement;
@@ -213,7 +190,6 @@ const recentPosts = await getCollection("posts", ({ data }) => {
     let windowHeight = window.innerHeight;
     let lastScrollY = 0;
 
-    // Cache elements and their positions
     function cacheElements() {
         const sectionHeadings = document.querySelectorAll(".section-heading");
         cachedElements = Array.from(sectionHeadings).map((heading) => {
@@ -234,39 +210,33 @@ const recentPosts = await getCollection("posts", ({ data }) => {
         const viewportCenter = scrollY + windowHeight / 2;
         const maxDistance = windowHeight / 2;
 
-        // For fast scrolling, reduce animation frequency
         const isScrollingFast = scrollDelta > 20;
 
         cachedElements.forEach((item) => {
             const elementCenter = item.offsetTop + item.height / 2;
             const distanceFromCenter = Math.abs(elementCenter - viewportCenter);
 
-            // Skip elements that are far from viewport during fast scrolling
             if (isScrollingFast && distanceFromCenter > windowHeight) {
                 return;
             }
 
-            // Calculate proximity factor (1 when in center, 0 when at max distance)
             const proximityFactor = Math.max(
                 0,
                 1 - distanceFromCenter / maxDistance,
             );
 
-            // Font weight range: 300 (light) to 600 (semibold)
             const minWeight = 300;
             const maxWeight = 600;
             const fontWeight = Math.round(
                 minWeight + proximityFactor * (maxWeight - minWeight),
             );
 
-            // Width range: 100 to 115 (expanded)
             const minWidth = 100;
             const maxWidth = 115;
             const fontWidth = Math.round(
                 minWidth + proximityFactor * (maxWidth - minWidth),
             );
 
-            // Only update if weight has changed significantly (reduces DOM operations)
             const currentWeight = item.element.dataset.currentWeight || "300";
             const currentWidth = item.element.dataset.currentWidth || "100";
             if (
@@ -285,20 +255,16 @@ const recentPosts = await getCollection("posts", ({ data }) => {
 
     function handleSectionScroll() {
         if (!ticking) {
-            // Use different timing for smooth vs fast scrolling
             const scrollDelta = Math.abs(window.scrollY - lastScrollY);
             if (scrollDelta > 30) {
-                // Fast scrolling - update immediately
                 updateSectionHeadings();
             } else {
-                // Normal scrolling - use RAF for smoothness
                 requestAnimationFrame(updateSectionHeadings);
                 ticking = true;
             }
         }
     }
 
-    // Debounced resize handler to recache elements
     let resizeTimeout: ReturnType<typeof setTimeout>;
     function handleResize() {
         clearTimeout(resizeTimeout);
@@ -308,38 +274,32 @@ const recentPosts = await getCollection("posts", ({ data }) => {
         }, 150);
     }
 
-    // Initialize
     function initialize() {
         cacheElements();
         updateSectionHeadings();
 
-        // Listen for scroll events with passive flag for better performance
         window.addEventListener("scroll", handleSectionScroll, {
             passive: true,
         });
         window.addEventListener("resize", handleResize, { passive: true });
     }
 
-    // Setup on DOM ready
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", initialize);
     } else {
         initialize();
     }
 
-    // Re-initialize after page transitions
     document.addEventListener("astro:page-load", () => {
         setTimeout(() => {
             initialize();
         }, 100);
     });
 
-    // Email protection - obfuscation to prevent crawlers
     function setupEmailProtection() {
         const emailLink = document.getElementById("email-link");
 
         if (emailLink) {
-            // Split and reverse parts of the email for basic obfuscation
             const user = "hcaer"; // 'reach' reversed
             const domain = "ved.eyrw"; // 'wrye.dev' reversed
             const actualEmail =
@@ -347,7 +307,6 @@ const recentPosts = await getCollection("posts", ({ data }) => {
                 "@" +
                 domain.split("").reverse().join("");
 
-            // Set up the email link on click
             emailLink.addEventListener("click", function (e) {
                 e.preventDefault();
                 window.location.href = "mailto:" + actualEmail;
@@ -355,14 +314,12 @@ const recentPosts = await getCollection("posts", ({ data }) => {
         }
     }
 
-    // Initialize email protection
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", setupEmailProtection);
     } else {
         setupEmailProtection();
     }
 
-    // Re-initialize email protection after page transitions
     document.addEventListener("astro:page-load", () => {
         setTimeout(setupEmailProtection, 100);
     });
@@ -372,18 +329,19 @@ const recentPosts = await getCollection("posts", ({ data }) => {
     @reference "tailwindcss";
 
     .content-section {
-        @apply border-l-2 border-slate-200 pl-6 md:pl-8;
+        @apply border-l-2 border-slate-200 dark:border-slate-700 pl-6 md:pl-8;
     }
 
     .section-heading {
-        @apply text-2xl md:text-3xl lg:text-4xl text-slate-900 mb-4 md:mb-6 tracking-wide;
+        @apply text-2xl md:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-4 md:mb-6 tracking-wide;
         font-variation-settings:
             "wght" 300,
             "wdth" 100;
         transition: font-variation-settings 0.1s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Make focus underline thinner on post titles/descriptions in homepage Recent Posts (override global) */
+    .body-text { @apply dark:text-slate-300; }
+    .content-section :global(a) { @apply dark:text-slate-100 dark:hover:text-slate-300; }
     #blog :global(.post-item a:focus-visible) {
         text-decoration-thickness: 1.5px !important;
         text-underline-offset: 3px !important;

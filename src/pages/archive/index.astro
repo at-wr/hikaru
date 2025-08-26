@@ -3,18 +3,16 @@ import Foundation from '../../layouts/Foundation.astro';
 import PostListItem from '../../components/PostListItem.astro';
 import { getCollection } from 'astro:content';
 import Header from '../../components/Header.astro';
+import SiteFooter from '../../components/ui/SiteFooter.astro';
 
-// Get all blog posts
 const allPosts = await getCollection('posts', ({ data }) => {
   return !data.draft;
 });
 
-// Sort posts by published date (newest first)
 const sortedPosts = allPosts.sort((a, b) => 
   new Date(b.data.published).getTime() - new Date(a.data.published).getTime()
 );
 
-// Group posts by category
 const categories = [...new Set(sortedPosts.map(post => post.data.category))];
 ---
 
@@ -26,22 +24,20 @@ const categories = [...new Set(sortedPosts.map(post => post.data.category))];
     <Header customTitle="Alan's Blog" />
   </Fragment>
 
-  <div class="min-h-screen bg-white">
-    <!-- Main content -->
+  <div class="min-h-screen bg-white dark:bg-slate-900">
     <main id="main-content" class="px-8 md:px-16 lg:px-24 py-16" style="view-transition-name: main-content;">
       <div class="max-w-4xl mx-auto">
-        <!-- Hero section -->
+        
         <section class="mb-16">
-          <h2 class="text-4xl md:text-5xl font-light text-slate-900 mb-6 leading-tight">
+          <h2 class="text-4xl md:text-5xl font-light text-slate-900 dark:text-slate-100 mb-6 leading-tight">
             Archive
           </h2>
-          <p class="text-lg text-slate-600 leading-relaxed max-w-2xl mb-8">
+          <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl mb-8">
             Writing about development, technology, and lessons learned while building things.
           </p>
           
-          <!-- Category links -->
           <div class="flex flex-wrap gap-3 text-sm font-mono">
-            <span class="text-slate-500 font-mono">Filter:</span>
+            <span class="text-slate-500 dark:text-slate-400 font-mono">Filter:</span>
             <a href="/archive" class="category-link active" aria-current="page">All</a>
             {categories.map(category => (
               <a 
@@ -54,7 +50,6 @@ const categories = [...new Set(sortedPosts.map(post => post.data.category))];
           </div>
         </section>
 
-        <!-- Posts grid -->
         <section class="space-y-8">
           {sortedPosts.map(post => (
             <PostListItem
@@ -68,6 +63,8 @@ const categories = [...new Set(sortedPosts.map(post => post.data.category))];
             />
           ))}
         </section>
+
+        <SiteFooter />
       </div>
     </main>
   </div>
@@ -77,10 +74,26 @@ const categories = [...new Set(sortedPosts.map(post => post.data.category))];
   @reference "tailwindcss";
   
   .category-link {
-    @apply inline-block text-slate-600 hover:text-slate-900 transition-colors underline decoration-slate-300 hover:decoration-slate-600;
+    @apply inline-block text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100 transition-colors underline decoration-slate-300 dark:decoration-slate-400 hover:decoration-slate-600 dark:hover:decoration-slate-200;
   }
   
   .category-link.active {
-    @apply text-slate-900 decoration-slate-900;
+    @apply text-slate-900 dark:text-slate-100 decoration-slate-900 dark:decoration-slate-100;
+  }
+
+  .category-link + .category-link {
+    position: relative;
+    padding-left: 0.75rem;
+  }
+  .category-link + .category-link::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: rgb(203 213 225);
+  }
+  @media (prefers-color-scheme: dark) {
+    .category-link + .category-link::before {
+      color: rgb(100 116 139);
+    }
   }
 </style>
