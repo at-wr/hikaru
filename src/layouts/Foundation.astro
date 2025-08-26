@@ -17,11 +17,12 @@ const pageDescription = description || 'Place where I write, record, and share m
 ---
 
 <!doctype html>
-<html lang={language}>
+<html lang={language} class="scheme-light-dark">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="description" content={pageDescription} />
+        <meta name="color-scheme" content="light dark" />
 
 
 		<meta property="og:type" content="website" />
@@ -39,16 +40,13 @@ const pageDescription = description || 'Place where I write, record, and share m
 		<link rel="canonical" href={Astro.url.href} />
 		<link rel="alternate" type="application/rss+xml" href="/rss.xml" title="Alan Ye" />
 
-		<!-- Dynamic Open Graph Images based on page -->
+		
 		{(() => {
 			const path = Astro.url.pathname;
 			
-			// Simple routing detection
 			if (path.startsWith('/archive/')) {
-				// Archive section
 				const segments = path.split('/').filter(Boolean);
 				
-				// Posts: /archive/post-slug
 				if (segments.length === 2 && segments[0] === 'archive' && segments[1] !== 'tag' && segments[1] !== 'category') {
 					const slug = segments[1];
 					return (
@@ -65,7 +63,6 @@ const pageDescription = description || 'Place where I write, record, and share m
 					);
 				}
 				
-				// Tags: /archive/tag/tag-name
 				if (segments.length === 3 && segments[0] === 'archive' && segments[1] === 'tag') {
 					const tag = segments[2];
 					return (
@@ -82,7 +79,6 @@ const pageDescription = description || 'Place where I write, record, and share m
 					);
 				}
 				
-				// Categories: /archive/category/category-name
 				if (segments.length === 3 && segments[0] === 'archive' && segments[1] === 'category') {
 					const category = segments[2];
 					return (
@@ -100,7 +96,6 @@ const pageDescription = description || 'Place where I write, record, and share m
 				}
 			}
 			
-			// Handle root archive page
 			if (path === '/archive') {
 				return (
 					<>
@@ -116,7 +111,6 @@ const pageDescription = description || 'Place where I write, record, and share m
 				);
 			}
 			
-			// Handle other specific pages
 			let ogImage = 'home';
 			if (path === '/friends') ogImage = 'friends';
 			

@@ -3,7 +3,6 @@ import { defineConfig, fontProviders } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
-// https://astro.build/config
 export default defineConfig({
   site: 'https://wrye.dev',
   experimental: {
@@ -26,9 +25,12 @@ export default defineConfig({
   },
   markdown: {
     shikiConfig: {
-      theme: 'catppuccin-latte',
+      themes: {
+        light: 'catppuccin-latte',
+        dark: 'catppuccin-mocha',
+      },
       wrap: true,
-      defaultColor: 'light',
+      defaultColor: 'dark',
     }
   },
   integrations: [

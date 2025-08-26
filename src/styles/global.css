@@ -2,21 +2,20 @@
 
 :root {
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color-scheme: light dark;
 }
 
-/* Ensure Astro/Shiki syntax highlighting colors are preserved */
 .astro-code {
   color: var(--astro-code-color-text);
   background-color: var(--astro-code-color-background);
 }
 
-/* Fallback for code blocks without language - only apply if no color vars */
+
 .astro-code.text:not([style*="color"]) {
   color: #24292e;
   background-color: #f6f8fa;
 }
 
-/* Dark mode support for fallback */
 @media (prefers-color-scheme: dark) {
   .astro-code.text:not([style*="color"]) {
     color: #f0f6fc;
@@ -24,10 +23,6 @@
   }
 }
 
-/* Base typography with Tailwind classes
-   Font strategy: Prefer SF Pro on Apple platforms via -apple-system.
-   Otherwise, fall back to Inter provided by Astro Fonts (css var).
-*/
 @layer base {
   html {
     font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
@@ -39,7 +34,6 @@
     scroll-behavior: smooth;
   }
 
-  /* On Apple platforms, prefer SF Pro */
   @supports (font-family: -apple-system) {
     html {
       font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
@@ -52,7 +46,6 @@
   }
 }
 
-/* View transition animations */
 @layer utilities {
   ::view-transition-old(root),
   ::view-transition-new(root) {
@@ -90,7 +83,6 @@
     }
   }
 
-  /* Reduced motion support */
   @media (prefers-reduced-motion: reduce) {
     ::view-transition-old(root),
     ::view-transition-new(root) {
@@ -104,8 +96,6 @@
     to { opacity: 1; }
   }
 }
-
-/* for SF Pro */
 
 @layer utilities {
     .font-thin {
@@ -137,36 +127,36 @@
     }
 }
 
-/* Reusable focus styles for accessibility */
 @layer utilities {
-  /* Outline for button-like or block elements */
   .focus-ring { outline: none; }
   .focus-ring:focus-visible {
-    outline: 2px solid #64748b; /* slate-500 */
+    outline: 2px solid #64748b;
     outline-offset: 3px;
   }
 }
 
-/* Global anchor focus styling for visibility across content */
 @layer base {
   a:focus-visible {
     outline: none;
     text-decoration: underline;
-    text-decoration-color: #334155; /* slate-700 */
+    text-decoration-color: #334155;
     text-decoration-thickness: 3px;
     text-underline-offset: 4px;
   }
-  /* Keep button-like anchors using outline style only */
+  @media (prefers-color-scheme: dark) {
+    a:focus-visible {
+      text-decoration-color: #cbd5e1;
+    }
+  }
   a.focus-ring:focus-visible {
     text-decoration: none;
   }
 }
 
-/* Ensure links explicitly set to no-underline still show focus styling */
 @layer utilities {
   a.no-underline:focus-visible {
     text-decoration: underline !important;
-    text-decoration-color: #334155 !important; /* slate-700 */
+    text-decoration-color: #334155 !important;
     text-decoration-thickness: 3px !important;
     text-underline-offset: 4px !important;
   }
