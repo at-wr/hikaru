@@ -78,7 +78,7 @@ const pageDescription = "Place where I list the talented people I know.";
           </p>
         </section>
         
-        <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <section id="friends-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
           {friends.map((friend) => (
             <a 
               href={friend.url} 
@@ -177,4 +177,108 @@ const pageDescription = "Place where I list the talented people I know.";
     @apply group-hover:translate-x-full;
     transition: transform 0.6s ease;
   }
+
+  #friends-grid.is-shuffling {
+    pointer-events: none;
+  }
+
+  .friend-card.blur-on-shuffle {
+    filter: blur(6px);
+    opacity: 0.9;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .friend-card.blur-on-shuffle {
+      filter: blur(3px);
+      opacity: 0.95;
+    }
+  }
 </style>
+
+<script>
+  (function () {
+    if (typeof window === 'undefined') return;
+    const start = () => {
+      const grid = document.getElementById('friends-grid');
+      if (!grid || grid.hasAttribute('data-animated')) return;
+      grid.setAttribute('data-animated', 'true');
+
+      const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const duration = prefersReduced ? 180 : 420;
+      const timing = 'cubic-bezier(0.23, 1, 0.32, 1)';
+      const maxDelay = prefersReduced ? 0 : 80;
+
+      const cards = Array.from(grid.querySelectorAll('.friend-card'));
+      if (cards.length === 0) return;
+
+      grid.classList.add('is-shuffling');
+      cards.forEach((el) => el.classList.add('blur-on-shuffle'));
+
+      const first = new Map();
+      cards.forEach((el) => first.set(el, el.getBoundingClientRect()));
+
+      const shuffled = cards.slice();
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+
+      shuffled.forEach((el) => grid.appendChild(el));
+      const newIndex = new Map();
+      shuffled.forEach((el, i) => newIndex.set(el, i));
+
+      const last = new Map();
+      cards.forEach((el) => last.set(el, el.getBoundingClientRect()));
+
+      if (!prefersReduced) {
+        const gridHeight = grid.offsetHeight;
+        grid.style.height = gridHeight + 'px';
+        cards.forEach((el) => {
+          const a = first.get(el);
+          const b = last.get(el);
+          if (!a || !b) return;
+          const dx = a.left - b.left;
+          const dy = a.top - b.top;
+          const tx = Math.round(dx * 100) / 100;
+          const ty = Math.round(dy * 100) / 100;
+          el.style.transform = `translate3d(${tx}px, ${ty}px, 0)`;
+          el.style.willChange = 'transform, filter, opacity';
+        });
+
+        void grid.offsetWidth;
+
+        requestAnimationFrame(() => {
+          cards.forEach((el) => {
+            const idx = newIndex.get(el) ?? 0;
+            const base = Math.min(idx * 20, maxDelay);
+            const jitter = Math.floor(Math.random() * 20);
+            const delay = Math.min(base + jitter, maxDelay);
+            el.style.transition = `transform ${duration}ms ${timing} ${delay}ms, filter ${Math.min(duration, 160)}ms ${timing}, opacity ${Math.min(duration, 160)}ms ${timing}`;
+          });
+          requestAnimationFrame(() => {
+            cards.forEach((el) => {
+              el.style.transform = '';
+            });
+          });
+        });
+      }
+
+      window.setTimeout(() => {
+        cards.forEach((el) => {
+          el.classList.remove('blur-on-shuffle');
+          el.style.transition = '';
+          el.style.transform = '';
+          el.style.willChange = '';
+        });
+        grid.classList.remove('is-shuffling');
+      }, duration + maxDelay + 80);
+      window.setTimeout(() => { grid.style.height = ''; }, duration + maxDelay + 120);
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', start, { once: true });
+    } else {
+      start();
+    }
+  })();
+</script>
