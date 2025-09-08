@@ -13,7 +13,10 @@ export function getOgMeta(pathname: string): OgMeta {
   if (path.startsWith('/archive/')) {
     const segments = path.split('/').filter(Boolean);
     if (segments.length === 2) {
-      return { ogImage: `og/posts/${segments[1]}.png`, ...BASE_META };
+      const slug = segments[1];
+      if (slug !== 'tag' && slug !== 'category') {
+        return { ogImage: `og/posts/${slug}.png`, ...BASE_META };
+      }
     }
     if (segments[1] === 'tag' && segments[2]) {
       return { ogImage: `og/tags/${segments[2]}.png`, ...BASE_META };
