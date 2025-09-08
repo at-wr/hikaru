@@ -274,30 +274,12 @@ const recentPosts = await getCollection("posts", ({ data }) => {
         }, 150);
     }
 
-    function initialize() {
-        cacheElements();
-        updateSectionHeadings();
-
-        window.addEventListener("scroll", handleSectionScroll, {
-            passive: true,
-        });
-        window.addEventListener("resize", handleResize, { passive: true });
-    }
-
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", initialize);
-    } else {
-        initialize();
-    }
-
-    document.addEventListener("astro:page-load", () => {
-        setTimeout(() => {
-            initialize();
-        }, 100);
-    });
+    let listenersAttached = false;
+    let emailLink: HTMLElement | null = null;
+    let emailClickHandler: ((e: MouseEvent) => void) | null = null;
 
     function setupEmailProtection() {
-        const emailLink = document.getElementById("email-link");
+        emailLink = document.getElementById("email-link");
 
         if (emailLink) {
             const user = "hcaer"; // 'reach' reversed
@@ -307,21 +289,54 @@ const recentPosts = await getCollection("posts", ({ data }) => {
                 "@" +
                 domain.split("").reverse().join("");
 
-            emailLink.addEventListener("click", function (e) {
+            emailClickHandler = function (e) {
                 e.preventDefault();
                 window.location.href = "mailto:" + actualEmail;
-            });
+            };
+
+            emailLink.addEventListener("click", emailClickHandler);
         }
     }
 
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", setupEmailProtection);
-    } else {
+    function initialize() {
+        if (listenersAttached) return;
+
+        cacheElements();
+        updateSectionHeadings();
+
+        window.addEventListener("scroll", handleSectionScroll, {
+            passive: true,
+        });
+        window.addEventListener("resize", handleResize, { passive: true });
+
         setupEmailProtection();
+        listenersAttached = true;
+    }
+
+    function cleanup() {
+        if (!listenersAttached) return;
+
+        window.removeEventListener("scroll", handleSectionScroll);
+        window.removeEventListener("resize", handleResize);
+
+        if (emailLink && emailClickHandler) {
+            emailLink.removeEventListener("click", emailClickHandler);
+        }
+
+        emailLink = null;
+        emailClickHandler = null;
+        listenersAttached = false;
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initialize);
+    } else {
+        initialize();
     }
 
     document.addEventListener("astro:page-load", () => {
-        setTimeout(setupEmailProtection, 100);
+        cleanup();
+        setTimeout(initialize, 100);
     });
 </script>
 
