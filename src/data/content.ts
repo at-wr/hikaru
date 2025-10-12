@@ -15,6 +15,13 @@ export const skills: SkillCategory[] = [
 
 export const experiences: Experience[] = [
   {
+    title: "Full Stack Engineer",
+    company: "Mewtant",
+    period: "2025 - Present",
+    description: "Connecting the virtual world to the reality.",
+    current: true
+  },
+  {
     title: "Vice President",
     company: "Computerization",
     period: "2024 - 2025",
