@@ -3,11 +3,11 @@
 Personal portfolio and blog built with Astro 5, Tailwind v4, and static output.
 
 ## Develop
-- Install: `pnpm install`
-- Start: `pnpm dev`
-- Type/Content check: `pnpm check`
-- Build: `pnpm build`
-- Preview: `pnpm preview`
+- Install: `bun install`
+- Start: `bun dev`
+- Type/Content check: `bun run check`
+- Build: `bun run build`
+- Preview: `bun run preview`
 
 ## Content Schema
 Posts live in `src/content/posts` and must match `src/content/config.ts`:

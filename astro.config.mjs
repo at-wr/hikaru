@@ -16,9 +16,10 @@ export default defineConfig({
       }
     ]
   },
-  vite: {
+  // Bun may install a separate Vite type tree; keep runtime config identical.
+  vite: /** @type {any} */ ({
     plugins: [tailwindcss()]
-  },
+  }),
   prefetch: {
     prefetchAll: true,
     defaultStrategy: 'viewport',
