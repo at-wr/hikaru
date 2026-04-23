@@ -15,6 +15,13 @@ export const skills: SkillCategory[] = [
 
 export const experiences: Experience[] = [
   {
+    title: "Product Engineer",
+    company: "Paperboy Products",
+    period: "2026 - Present",
+    description: "Building your ambient desktop assistant.",
+    current: true
+  },
+  {
     title: "Full Stack Engineer",
     company: "Mewtant",
     period: "2025 - Present",
@@ -96,12 +103,6 @@ export const contactMethods: ContactMethod[] = [
   {
     label: "Mastodon",
     href: "https://diff.network/@alan", 
-    external: true,
-    rel: "me"
-  },
-  {
-    label: "Mastodon (Old)",
-    href: "https://mastodon.social/@wrye", 
     external: true,
     rel: "me"
   }
