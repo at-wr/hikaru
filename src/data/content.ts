@@ -18,13 +18,13 @@ export const experiences: Experience[] = [
     title: "Product Engineer",
     company: "Paperboy Products",
     period: "2026 - Present",
-    description: "Building your ambient desktop assistant.",
+    description: "Building your ambient assistant.",
     current: true
   },
   {
     title: "Full Stack Engineer",
     company: "Mewtant",
-    period: "2025 - Present",
+    period: "",
     description: "Connecting the virtual world to the reality.",
     current: true
   },
